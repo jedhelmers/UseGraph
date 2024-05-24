@@ -58,7 +58,6 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
 
     const handleNodeSelect = (nodeId) => {
-        console.log('nodeId', nodeId)
         if (nodeId !== undefined) {
             setItemId(nodeId)
         }

@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 
 
 const TreeNode = ({ node, isLocked, setCurrentNode }) => {
-    console.log('isLocked', isLocked)
     const [isExpanded, setIsExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
 
     const toggleExpand = (e) => {
-        e.stopPropagation(); // Prevents the click from affecting parent elements
+        // Prevents the click from affecting parent elements
+        e.stopPropagation();
         setIsExpanded(!isExpanded);
     };
 
     const handleNodeSelect = (e) => {
-        e.stopPropagation(); // Prevents the click from affecting parent elements
+        // Prevents the click from affecting parent elements
+        e.stopPropagation();
         setCurrentNode(node.id);
     };
 
