@@ -74,13 +74,18 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
             <div className="metadata-container">
                 <div className="tree">
-                    <MetadataTreeDisplay reconstructNestedJSON={reconstructNestedJSON} setCurrentNode={handleNodeSelect}/>
+                    <MetadataTreeDisplay
+                        reconstructNestedJSON={reconstructNestedJSON}
+                        setCurrentNode={handleNodeSelect}
+                        isLocked={errors.length}
+                    />
                 </div>
                 <div>
                     {currentNode && (
                         <MetadataForm
                             isRoot={true}
                             id={itemId}
+                            isLocked={errors.length}
                             addChild={handleAddChild}
                             handleNodeSelect={handleNodeSelect}
                             errorHandler={errorHandler}
@@ -101,6 +106,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                                 <MetadataForm
                                     isRoot={false}
                                     id={id}
+                                    isLocked={errors.length}
                                     addChild={handleAddChild}
                                     handleNodeSelect={handleNodeSelect}
                                     errorHandler={errorHandler}

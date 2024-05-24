@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
 
-const TreeNode = ({ node, setCurrentNode }) => {
+const TreeNode = ({ node, isLocked, setCurrentNode }) => {
+    console.log('isLocked', isLocked)
     const [isExpanded, setIsExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
 
@@ -17,16 +18,16 @@ const TreeNode = ({ node, setCurrentNode }) => {
 
     return (
         <li>
-            <span onClick={toggleExpand} style={{ cursor: 'pointer' }}>
+            <button disabled={isLocked} onClick={toggleExpand} style={{ cursor: 'pointer' }}>
                 {hasChildren ? (isExpanded ? '[-] ' : '[+] ') : ''}
-            </span>
-            <span onClick={handleNodeSelect} style={{ cursor: 'pointer' }}>
+            </button>
+            <button disabled={isLocked} onClick={handleNodeSelect} style={{ cursor: 'pointer' }}>
                 {node.keyname}
-            </span>
+            </button>
             {hasChildren && isExpanded && (
                 <ul>
                     {node.children.map(child => (
-                        <TreeNode key={child.id} node={child} setCurrentNode={setCurrentNode} />
+                        <TreeNode key={child.id} isLocked={isLocked} node={child} setCurrentNode={setCurrentNode} />
                     ))}
                 </ul>
             )}
@@ -35,20 +36,20 @@ const TreeNode = ({ node, setCurrentNode }) => {
 };
 
 
-const Tree = ({ data, setCurrentNode }) => {
+const Tree = ({ data, isLocked, setCurrentNode }) => {
     return (
         <ul>
-            <TreeNode setCurrentNode={setCurrentNode} node={data} />
+            <TreeNode isLocked={isLocked} setCurrentNode={setCurrentNode} node={data} />
         </ul>
     );
 };
 
-const MetadataTreeDisplay = ({ rootId=1, reconstructNestedJSON, setCurrentNode }) => {
+const MetadataTreeDisplay = ({ rootId=1, isLocked, reconstructNestedJSON, setCurrentNode }) => {
     const nestedData = reconstructNestedJSON(rootId);
 
     return (
         <div>
-            {nestedData ? <Tree setCurrentNode={setCurrentNode} data={nestedData} /> : <p>Loading tree...</p>}
+            {nestedData ? <Tree isLocked={isLocked} setCurrentNode={setCurrentNode} data={nestedData} /> : <p>Loading tree...</p>}
         </div>
     );
 };

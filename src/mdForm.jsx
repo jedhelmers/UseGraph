@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
-const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, isRoot, errorHandler }) => {
+const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, isLocked, id, isRoot, errorHandler }) => {
     const [formData, setFormData] = useState({ ...metadata });
     const cardRef = useRef(null)
     const keynameRef = useRef(null)
@@ -68,13 +68,13 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, is
             <div>
                 {
                     !isRoot &&
-                        <button onClick={() => handleNodeSelect(id)}>
+                        <button disabled={isLocked} onClick={() => handleNodeSelect(id)}>
                             View This Child
                         </button>
                 }
                 {
                     isRoot &&
-                        <button onClick={() => addChild(id)}>
+                        <button disabled={isLocked} onClick={() => addChild(id)}>
                             +
                         </button>
                 }
@@ -126,7 +126,7 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, is
             <div>
                 {
                     !isRoot &&
-                        <button onClick={() => addChild(id)}>
+                        <button disabled={isLocked} onClick={() => addChild(id)}>
                             +
                         </button>
                 }
