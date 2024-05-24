@@ -72,9 +72,12 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, is
                             View This Child
                         </button>
                 }
-                <button onClick={() => addChild(id)}>
-                    +
-                </button>
+                {
+                    isRoot &&
+                        <button onClick={() => addChild(id)}>
+                            +
+                        </button>
+                }
             </div>
             <div className='form-group col' ref={keynameRef}>
                 <label htmlFor='metadata-row-key' className='font-weight-bold'>Keyname:</label>
@@ -119,6 +122,14 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, is
                     value={metadata.units}
                     onChange={handleChange}
                 />
+            </div>
+            <div>
+                {
+                    !isRoot &&
+                        <button onClick={() => addChild(id)}>
+                            +
+                        </button>
+                }
             </div>
         </div>
     );

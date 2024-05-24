@@ -11,6 +11,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
     const handleAddChild = (id) => {
         const newChildId = `child-${Math.random().toString(36).substr(2, 9)}`
+        console.log('newChildId', newChildId)
         let newChildData = { id: newChildId, keyname: "Node", value: "value1", type: "type1", units: "units1", children: [] }
 
         const newChildNode = { id: newChildId, ...newChildData, children: [] };
@@ -57,6 +58,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
 
     const handleNodeSelect = (nodeId) => {
+        console.log('nodeId', nodeId)
         if (nodeId !== undefined) {
             setItemId(nodeId)
         }
@@ -64,7 +66,6 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         setCurrentNode(nodeId);
         setCurrentNodeState(getNode(nodeId));
         setChildren(getChildNodes(nodeId));
-        console.log(getChildNodes(nodeId))
     };
 
     return (
@@ -99,7 +100,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
                                 <MetadataForm
                                     isRoot={false}
-                                    id={itemId}
+                                    id={id}
                                     addChild={handleAddChild}
                                     handleNodeSelect={handleNodeSelect}
                                     errorHandler={errorHandler}
