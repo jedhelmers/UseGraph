@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
-const MetadataForm = ({ metadata, updateNode, handleNodeSelect, id, isRoot, errorHandler }) => {
+const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, id, isRoot, errorHandler }) => {
     const [formData, setFormData] = useState({ ...metadata });
     const cardRef = useRef(null)
     const keynameRef = useRef(null)
@@ -72,6 +72,9 @@ const MetadataForm = ({ metadata, updateNode, handleNodeSelect, id, isRoot, erro
                             View This Child
                         </button>
                 }
+                <button onClick={() => addChild(id)}>
+                    +
+                </button>
             </div>
             <div className='form-group col' ref={keynameRef}>
                 <label htmlFor='metadata-row-key' className='font-weight-bold'>Keyname:</label>

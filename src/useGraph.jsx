@@ -44,6 +44,8 @@ const useGraph = () => {
             }
             return newNodes;
         });
+        console.log('parentId, childId', parentId, childId)
+
     }, []);
 
     const getChildNodes = useCallback((nodeId) => {
