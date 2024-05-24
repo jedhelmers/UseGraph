@@ -11,8 +11,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
     const handleAddChild = (id) => {
         const newChildId = `child-${Math.random().toString(36).substr(2, 9)}`
-        console.log('newChildId', newChildId)
-        let newChildData = { id: newChildId, keyname: "Node", value: "value1", type: "type1", units: "units1", children: [] }
+        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "value1", type: "type1", units: "units1", children: [] }
 
         const newChildNode = { id: newChildId, ...newChildData, children: [] };
         addNode(newChildNode);
@@ -40,9 +39,10 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
             addNode(item1);
 
             for (let i = 1; i < 100; i++) {
-                let temp = { id: i, keyname: `key${i}`, value: `value${i}`, type: "type2", units: "units2", children: [] };
+                const parentId = Math.floor(i * Math.random())
+                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: `value${i}`, type: "type2", units: "units2", children: [] };
                 addNode(temp);
-                addChild(Math.floor(i * Math.random()), i);
+                addChild(parentId, i);
             }
         }
     }, []);
@@ -67,6 +67,8 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         setChildren(getChildNodes(nodeId));
     };
 
+    console.log("currentNode", itemId, currentNode)
+
     return (
         <>
             <h1>Current Metadata Node</h1>
@@ -84,6 +86,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                         <MetadataForm
                             isRoot={true}
                             id={itemId}
+                            parentId={currentNode.parentId}
                             removeNode={removeNode}
                             isLocked={errors.length}
                             addChild={handleAddChild}
@@ -101,6 +104,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                                 <MetadataForm
                                     isRoot={false}
                                     id={id}
+                                    parentId={itemId}
                                     removeNode={removeNode}
                                     isLocked={errors.length}
                                     addChild={handleAddChild}
