@@ -1,0 +1,147 @@
+@import "variables";
+
+.metadata-row:nth-of-type(odd) {
+    background-color: $ht-color-primary-dark-blue;
+    color: $ht-color-secondary-white;
+}
+
+.card {
+  background-color: $ht-color-primary-dark-blue;
+}
+
+.child-card:nth-of-type(odd) {
+  background-color: $ht-color-primary-med-blue;
+}
+
+.parent-card {
+  background-color: $ht-color-secondary-light-blue;
+}
+
+.parent-card-label {
+  color: $ht-color-primary-black;
+}
+
+.parent-fmb {
+  color: $ht-color-secondary-light-blue;
+  background-color: $ht-color-primary-dark-blue !important;
+}
+
+.metadata-row {
+    background-color: $ht-color-primary-med-blue;
+    color: $ht-color-secondary-white;
+}
+
+.selectize-control.metadata-row-key .selectize-dropdown [data-selectable] {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.selectize-control::before {
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+	content: ' ';
+	z-index: 2;
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 34px;
+	width: 16px;
+	height: 16px;
+	margin: -10px 0 0 0;
+	// background: url(/static_common/hyperthought/images/spinner.gif);
+	background-size: 16px 16px;
+	opacity: 0;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.selectize-control.loading::before {
+	opacity: 0.4;
+}
+
+.metadata-modal-preview {
+	border: 1px solid $ht-color-secondary-light-blue-opacity25;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid $ht-color-secondary-light-blue-opacity25;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: $ht-color-primary-black;
+  border-bottom: 1px solid $ht-color-secondary-light-blue-opacity25;
+
+}
+
+.autocomplete-items div:hover {
+  color: $ht-color-primary-med-blue;
+  background-color: $ht-color-secondary-light-blue;
+}
+
+.autocomplete-active {
+  color: $ht-color-secondary-white;
+  background-color: $ht-color-primary-black;
+}
+
+.fancytree-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.error-text {
+  color: #C12A47;
+}
+
+.input-grow {
+  width: 0;
+  padding: 0;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  white-space: nowrap;
+  visibility: hidden;
+  transition: width 0.3s, visibility 0.3s;
+}
+
+.input-grow.grown {
+  overflow: visible;
+  width: 200px;
+  visibility: visible;
+  padding: 10px;
+}
+
+// Validation disable/enable.
+#addSibling,
+#btnSaveMetadata,
+.metadata-add-card,
+.metadata-view-child,
+.metadata-remove-card,
+.metadata-remove-selected,
+.import-metadata-btn,
+.export-metadata-btn,
+.metadata-download-card,
+.invalid-form-disabled {
+  opacity: 1.0;
+  pointer-events: initial;
+}
+
+[class^="breadcrumbs"].disabled,
+[class^="breadcrumbs"].disabled a {
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.55);
+}

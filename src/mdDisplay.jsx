@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useGraph from './useGraph'; // Adjust the path as necessary
+import useGraph from './useGraph';
 import MetadataForm from './mdForm';
 import { MetadataTreeDisplay } from './tree';
 
@@ -7,6 +7,20 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
     const { updateNode, setCurrentNode, getNode, addNode, addChild, getChildNodes, reconstructNestedJSON } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
     const [children, setChildren] = useState([]);
+    const [errors, setErrors] = useState([])
+
+    const errorHandler = (id, isValid) => {
+        if (!isValid) {
+            setErrors([
+                ...errors,
+                id
+            ])
+        } else {
+            setErrors(
+                errors.filter(_id => _id !== id)
+            )
+        }
+    }
 
     // Load initial nodes - runs once
     useEffect(() => {
@@ -23,12 +37,9 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         }
     }, []);
 
-    // Update currentNode and children when the selected node changes
-    // useEffect(() => {
-    //     console.log('CHANGED', currentNode)
-    //     setCurrentNodeState(getNode(itemId));
-    //     setChildren(getChildNodes(itemId));
-    // }, [itemId, getNode, getChildNodes, currentNode]);
+    useEffect(() => {
+        console.log('errors', errors)
+    }, [errors])
 
     useEffect(() => {
         setCurrentNodeState(getNode(itemId));
@@ -51,39 +62,35 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         <>
             <h1>Current Metadata Node</h1>
 
-            <div class="metadata-container">
-                <div class="tree">
+            <div className="metadata-container">
+                <div className="tree">
                     <MetadataTreeDisplay reconstructNestedJSON={reconstructNestedJSON} setCurrentNode={handleNodeSelect}/>
                 </div>
                 <div>
                     {currentNode && (
                         <MetadataForm
+                            isRoot={true}
+                            handleNodeSelect={handleNodeSelect}
+                            errorHandler={errorHandler}
                             metadata={currentNode}
                             updateNode={updateNode}
                             reconstructNestedJSON={reconstructNestedJSON}
                         />
                     )}
-
-                    {/* {console.log(currentNode)} */}
-
                     <h2>Children</h2>
                     <ul>
-                        {/* {children.map((childNode) => (
-                            <li key={childNode.id}>
-                                {childNode.keyname}
-                                <button onClick={() => handleNodeSelect(childNode.id)}>
-                                    View This Child
-                                </button>
-                            </li>
-                        ))} */}
                         {currentNode?.children.map((id) => (
                             <li key={id}>
-                                {getNode(id).keyname}
+                                {/* {getNode(id).keyname}
                                 <button onClick={() => handleNodeSelect(id)}>
                                     View This Child
-                                </button>
+                                </button> */}
 
                                 <MetadataForm
+                                    isRoot={false}
+                                    hasChildren
+                                    handleNodeSelect={handleNodeSelect}
+                                    errorHandler={errorHandler}
                                     metadata={getNode(id)}
                                     updateNode={updateNode}
                                     reconstructNestedJSON={reconstructNestedJSON}
