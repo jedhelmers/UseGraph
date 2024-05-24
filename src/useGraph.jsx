@@ -46,6 +46,24 @@ const useGraph = () => {
         });
     }, []);
 
+    const removeNode = useCallback((id) => {
+        setNodes(prev => {
+            const newNodes = new Map(prev);
+
+            // Find the parent node and remove the reference to this node
+            for (const [nodeId, node] of newNodes) {
+                if (node.children && node.children.includes(id)) {
+                    node.children = node.children.filter(childId => childId !== id);
+                }
+            }
+
+            // Remove the node from the map
+            newNodes.delete(id);
+
+            return newNodes;
+        });
+    }, []);
+
     const getChildNodes = useCallback((nodeId) => {
         const node = getNode(nodeId);
 
@@ -83,7 +101,18 @@ const useGraph = () => {
         }
     }, [currentNodeId, nodes, getChildNodes]);
 
-    return { addNode, getNode, updateNode, setCurrentNode, getCurrentNode, addChild, getChildNodes, reconstructNestedJSON, currentChildren };
+    return {
+        addNode,
+        getNode,
+        updateNode,
+        setCurrentNode,
+        getCurrentNode,
+        addChild,
+        removeNode,
+        getChildNodes,
+        reconstructNestedJSON,
+        currentChildren
+    };
 };
 
 export default useGraph;

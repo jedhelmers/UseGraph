@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
-const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, isLocked, id, isRoot, errorHandler }) => {
+const MetadataForm = ({ metadata, updateNode, addChild, removeNode, handleNodeSelect, isLocked, id, isRoot, errorHandler }) => {
     const [formData, setFormData] = useState({ ...metadata });
     const cardRef = useRef(null)
     const keynameRef = useRef(null)
@@ -49,23 +49,17 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, isLock
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // if (isValueValid(e)) {
-        //     console.log('VALID:', name)
-        // } else {
-        //     console.log('ERROR:', name)
-        // }
         isValueValid(e)
 
         const updatedNode = { ...metadata, [name]: value };
         updateNode(metadata.id, updatedNode);
     };
 
-    // metadata-item card card-body card-ht metadata-card parent-card
-    // metadata-item card card-body card-ht metadata-card child-card mb-3
-
     return (
         <div ref={cardRef} className='metadata-item card card-body card-ht metadata-card child-card mb-3'>
-            <div>
+            <div className='space-between'>
+                <div></div>
+
                 {
                     !isRoot &&
                         <button disabled={isLocked} onClick={() => handleNodeSelect(id)}>
@@ -74,9 +68,14 @@ const MetadataForm = ({ metadata, updateNode, addChild, handleNodeSelect, isLock
                 }
                 {
                     isRoot &&
-                        <button disabled={isLocked} onClick={() => addChild(id)}>
-                            +
-                        </button>
+                        <>
+                            <button disabled={isLocked} onClick={() => addChild(id)}>
+                                +
+                            </button>
+                            <button disabled={isLocked} onClick={() => removeNode(id)}>
+                                -
+                            </button>
+                        </>
                 }
             </div>
             <div className='form-group col' ref={keynameRef}>

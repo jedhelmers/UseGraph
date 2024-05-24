@@ -4,7 +4,7 @@ import MetadataForm from './mdForm';
 import { MetadataTreeDisplay } from './tree';
 
 const MetadataDisplay = ({ itemId = 1, setItemId }) => {
-    const { updateNode, setCurrentNode, getNode, addNode, addChild, getChildNodes, reconstructNestedJSON } = useGraph();
+    const { updateNode, setCurrentNode, getNode, addNode, addChild, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
     const [children, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
@@ -84,6 +84,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                         <MetadataForm
                             isRoot={true}
                             id={itemId}
+                            removeNode={removeNode}
                             isLocked={errors.length}
                             addChild={handleAddChild}
                             handleNodeSelect={handleNodeSelect}
@@ -97,14 +98,10 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                     <ul>
                         {currentNode?.children.map((id) => (
                             <li key={id}>
-                                {/* {getNode(id).keyname}
-                                <button onClick={() => handleNodeSelect(id)}>
-                                    View This Child
-                                </button> */}
-
                                 <MetadataForm
                                     isRoot={false}
                                     id={id}
+                                    removeNode={removeNode}
                                     isLocked={errors.length}
                                     addChild={handleAddChild}
                                     handleNodeSelect={handleNodeSelect}
