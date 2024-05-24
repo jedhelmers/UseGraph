@@ -80,7 +80,7 @@ const MetadataForm = ({
                 {
                     isRoot &&
                         <>
-                            <button disabled={isLocked} onClick={() => addChild(id)}>
+                            <button disabled={isLocked} onClick={() => addChild(parentId)}>
                                 +
                             </button>
                             <button disabled={isLocked} onClick={() => {
@@ -139,7 +139,7 @@ const MetadataForm = ({
             <div>
                 {
                     !isRoot &&
-                        <button disabled={isLocked} onClick={() => addChild(id)}>
+                        <button disabled={isLocked} onClick={() => addChild(parentId)}>
                             +
                         </button>
                 }

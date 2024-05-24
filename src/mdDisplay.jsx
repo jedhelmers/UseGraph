@@ -98,25 +98,31 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                         />
                     )}
                     <h2>Children</h2>
-                    <ul>
-                        {currentNode?.children.map((id) => (
-                            <li key={id}>
-                                <MetadataForm
-                                    isRoot={false}
-                                    id={id}
-                                    parentId={itemId}
-                                    removeNode={removeNode}
-                                    isLocked={errors.length}
-                                    addChild={handleAddChild}
-                                    handleNodeSelect={handleNodeSelect}
-                                    errorHandler={errorHandler}
-                                    metadata={getNode(id)}
-                                    updateNode={updateNode}
-                                    reconstructNestedJSON={reconstructNestedJSON}
-                                />
-                            </li>
-                        ))}
-                    </ul>
+                    <span>
+                        {
+                            currentNode?.children?.length ? currentNode?.children.map((id) => (
+                                <span key={id}>
+                                    <MetadataForm
+                                        isRoot={false}
+                                        id={id}
+                                        parentId={itemId}
+                                        removeNode={removeNode}
+                                        isLocked={errors.length}
+                                        addChild={handleAddChild}
+                                        handleNodeSelect={handleNodeSelect}
+                                        errorHandler={errorHandler}
+                                        metadata={getNode(id)}
+                                        updateNode={updateNode}
+                                        reconstructNestedJSON={reconstructNestedJSON}
+                                    />
+                                </span>
+                            )) : (
+                                <button disabled={errors.length} onClick={() => handleAddChild(itemId)}>
+                                    +
+                                </button>
+                            )
+                        }
+                    </span>
                 </div>
             </div>
         </>
