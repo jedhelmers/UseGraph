@@ -69,8 +69,6 @@ const MetadataForm = ({
     return (
         <div ref={cardRef} className='metadata-item card card-body card-ht metadata-card child-card mb-3'>
             <div className='space-between'>
-                <div></div>
-
                 {
                     !isRoot &&
                         <button disabled={isLocked} onClick={() => handleNodeSelect(id)}>
@@ -79,7 +77,8 @@ const MetadataForm = ({
                 }
                 {
                     isRoot &&
-                        <>
+                        <div className='row space-between full-width'>
+                            <div></div>
                             <button disabled={isLocked} onClick={() => addChild(parentId)}>
                                 +
                             </button>
@@ -89,7 +88,7 @@ const MetadataForm = ({
                             }}>
                                 -
                             </button>
-                        </>
+                        </div>
                 }
             </div>
             <div className='form-group col' ref={keynameRef}>

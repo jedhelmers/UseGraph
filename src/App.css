@@ -80,7 +80,9 @@ ul > li:last-child:after {
 
 .metadata-container > .tree {
   margin: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  background-color: #161d32;
+  max-width: 260px;
 }
 
 .metadata-item {
@@ -182,4 +184,57 @@ label.error {
 .space-between {
   display: flex;
   justify-content: space-between;
+}
+
+.navigation-tree {
+  overflow-x: scroll;
+  max-width: 240px;
+}
+
+.navigation-tree * .row {
+  /* background-color: pink; */
+  /* max-width: 2000px;
+  min-width: 600px; */
+  display: flex;
+  justify-content: flex-start;
+}
+
+.navigation-tree * button {
+  border-style: none;
+  padding: 8px;
+  background-color: inherit;
+  text-align: left;
+  color: white;
+  font-size: 14px;
+  /* max-width: 1900px;
+  min-width: 560px; */
+  /* box-sizing: border-box; */
+}
+
+.navigation-tree * button.navigate {
+  /* background-color: pink; */
+  /* width: 2000px; */
+  width: 100%;
+}
+
+.navigation-tree * button.expand {
+  /* background-color: pink; */
+  width: 24px;
+}
+
+.navigation-tree * .row:hover {
+  background-color: #1f4167;
+}
+
+.navigation-tree * ul {
+  padding-left: 10px;
+}
+
+.navigation-tree * li {
+  display: inline-block;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
 }

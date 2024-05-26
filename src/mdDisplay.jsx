@@ -11,7 +11,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
     const handleAddChild = (id) => {
         const newChildId = `child-${Math.random().toString(36).substr(2, 9)}`
-        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "value1", type: "type1", units: "units1", children: [] }
+        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "", type: "", units: "", children: [] }
 
         const newChildNode = { id: newChildId, ...newChildData, children: [] };
         addNode(newChildNode);
@@ -35,12 +35,12 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
     useEffect(() => {
         // Assuming 1 means initial load
         if (itemId === 1) {
-            let item1 = { id: 0, keyname: "key1", value: "value1", type: "type1", units: "units1", children: [] };
+            let item1 = { id: 0, keyname: "key1", value: "", type: "", units: "", children: [] };
             addNode(item1);
 
             for (let i = 1; i < 100; i++) {
                 const parentId = Math.floor(i * Math.random())
-                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: `value${i}`, type: "type2", units: "units2", children: [] };
+                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: '', type: "", units: "", children: [] };
                 addNode(temp);
                 addChild(parentId, i);
             }

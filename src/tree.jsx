@@ -19,12 +19,14 @@ const TreeNode = ({ node, isLocked, setCurrentNode }) => {
 
     return (
         <li>
-            <button disabled={isLocked} onClick={toggleExpand} style={{ cursor: 'pointer' }}>
-                {hasChildren ? (isExpanded ? '[-] ' : '[+] ') : ''}
-            </button>
-            <button disabled={isLocked} onClick={handleNodeSelect} style={{ cursor: 'pointer' }}>
-                {node.keyname}
-            </button>
+            <div className='row'>
+                <button disabled={isLocked} onClick={toggleExpand} className='expand'>
+                    {hasChildren ? (isExpanded ? '[-] ' : '[+] ') : ''}
+                </button>
+                <button disabled={isLocked} onClick={handleNodeSelect} className='navigate'>
+                    {node.keyname}
+                </button>
+            </div>
             {hasChildren && isExpanded && (
                 <ul>
                     {node.children.map(child => (
@@ -49,7 +51,7 @@ const MetadataTreeDisplay = ({ rootId=1, isLocked, reconstructNestedJSON, setCur
     const nestedData = reconstructNestedJSON(rootId);
 
     return (
-        <div>
+        <div className='navigation-tree'>
             {nestedData ? <Tree isLocked={isLocked} setCurrentNode={setCurrentNode} data={nestedData} /> : <p>Loading tree...</p>}
         </div>
     );
