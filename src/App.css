@@ -4,7 +4,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -82,7 +82,7 @@ ul > li:last-child:after {
   margin: 20px;
   /* background-color: rgba(255, 255, 255, 0.1); */
   background-color: #161d32;
-  max-width: 260px;
+  /* max-width: 260px; */
 }
 
 .metadata-item {
@@ -188,7 +188,7 @@ label.error {
 
 .navigation-tree {
   overflow-x: scroll;
-  max-width: 240px;
+  /* max-width: 240px; */
 }
 
 .navigation-tree * .row {
@@ -232,9 +232,54 @@ label.error {
 
 .navigation-tree * li {
   display: inline-block;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .full-width {
   width: 100%;
 }
+
+/* Vertical line for collapsing */
+
+ul.collapsible {
+  list-style: none;
+  padding-left: 20px;
+  position: relative;
+}
+
+ul.collapsible ul {
+  list-style: none;
+  padding-left: 20px;
+  position: relative;
+}
+
+ul.collapsible li {
+  position: relative;
+}
+
+ul.collapsible li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px;
+  width: 1px;
+  background: #fff;
+}
+
+ul.collapsible li:last-child::before {
+  height: 50%;
+  top: 0;
+}
+
+ul.collapsible li ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px;
+  width: 1px;
+  background: #fff;
+}
+
+/* Vertical line for collapsing */
