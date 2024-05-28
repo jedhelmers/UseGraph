@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <header className="App-header">
       {/* Vertical collapse line test */}
-      <ul class="collapsible">
+      {/* <ul class="collapsible">
           <li>Item 1
               <ul>
                   <li>Sub-item 1.1</li>
@@ -24,7 +24,7 @@ function App() {
                   <li>Sub-item 2.2</li>
               </ul>
           </li>
-      </ul>
+      </ul> */}
       {/* Vertical collapse line test */}
 
         <img src={logo} className="App-logo" alt="logo" />

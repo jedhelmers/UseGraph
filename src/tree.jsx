@@ -28,7 +28,7 @@ const TreeNode = ({ node, isLocked, setCurrentNode }) => {
                 </button>
             </div>
             {hasChildren && isExpanded && (
-                <ul>
+                <ul className='collapsible'>
                     {node.children.map(child => (
                         <TreeNode key={child.id} isLocked={isLocked} node={child} setCurrentNode={setCurrentNode} />
                     ))}

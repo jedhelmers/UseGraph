@@ -49,12 +49,12 @@ ul > li {
 }
 
 ul > li:before {
-  content: "";
+  /* content: "";
   position: absolute;
   left: -20px;
   top: 10px;
   width: 10px;
-  border-left: 2px solid #000;
+  border-left: 2px solid #000; */
 }
 
 ul > li:after {
@@ -245,6 +245,8 @@ ul.collapsible {
   list-style: none;
   padding-left: 20px;
   position: relative;
+  padding: 0;
+  margin: 0;
 }
 
 ul.collapsible ul {
@@ -262,24 +264,24 @@ ul.collapsible li::before {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -10px;
+  left: -12px;
   width: 1px;
-  background: #fff;
+  background: rgba(147, 209, 255, .25);
 }
 
 ul.collapsible li:last-child::before {
-  height: 50%;
-  top: 0;
+  /* height: 50%;
+  top: 0; */
 }
 
 ul.collapsible li ul::before {
-  content: '';
+  /* content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -10px;
+  left: -12px;
   width: 1px;
-  background: #fff;
+  background: rgba(147, 209, 255, .25); */
 }
 
 /* Vertical line for collapsing */
