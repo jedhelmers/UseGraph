@@ -10,20 +10,22 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+      {/* Vertical collapse line test */}
       <ul class="collapsible">
-        <li>Item 1
-            <ul>
-                <li>Sub-item 1.1</li>
-                <li>Sub-item 1.2</li>
-            </ul>
-        </li>
-        <li>Item 2
-            <ul>
-                <li>Sub-item 2.1</li>
-                <li>Sub-item 2.2</li>
-            </ul>
-        </li>
-    </ul>
+          <li>Item 1
+              <ul>
+                  <li>Sub-item 1.1</li>
+                  <li>Sub-item 1.2</li>
+              </ul>
+          </li>
+          <li>Item 2
+              <ul>
+                  <li>Sub-item 2.1</li>
+                  <li>Sub-item 2.2</li>
+              </ul>
+          </li>
+      </ul>
+      {/* Vertical collapse line test */}
 
         <img src={logo} className="App-logo" alt="logo" />
         <p>
