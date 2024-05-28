@@ -19,9 +19,19 @@ const TreeNode = ({ node, isLocked, setCurrentNode, currentNode }) => {
         setCurrentNode(node.id);
     };
 
+    const selectionType = () => {
+        if (node?.id === currentNode?.id) {
+            return 'selected'
+        }
+        if (currentNode?.parentId === node?.id) {
+            return 'parent-selected'
+        }
+        return ''
+    }
+
     return (
         <li>
-            <div className={['row', node?.id === currentNode?.id ? 'selected' : ''].join(' ')} id={node.id}>
+            <div className={['row', selectionType()].join(' ')} id={node.id}>
                 <button disabled={isLocked} onClick={toggleExpand} className='expand'>
                     {
                         hasChildren ? (
