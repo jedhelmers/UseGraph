@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useGraph from './useGraph';
 import MetadataForm from './mdForm';
 import { MetadataTreeDisplay } from './tree';
+import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 const MetadataDisplay = ({ itemId = 1, setItemId }) => {
     const { updateNode, setCurrentNode, getNode, addNode, addChild, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
@@ -11,7 +12,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
     const handleAddChild = (id) => {
         const newChildId = `child-${Math.random().toString(36).substr(2, 9)}`
-        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "", type: "", units: "", children: [] }
+        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "", type: "", units: "", children: [], annotation: '' }
 
         const newChildNode = { id: newChildId, ...newChildData, children: [] };
         addNode(newChildNode);
@@ -35,12 +36,12 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
     useEffect(() => {
         // Assuming 1 means initial load
         if (itemId === 1) {
-            let item1 = { id: 0, keyname: "key1", value: "", type: "", units: "", children: [] };
+            let item1 = { id: 0, keyname: "key1", value: "", type: "", units: "", children: [], annotation: '' };
             addNode(item1);
 
             for (let i = 1; i < 100; i++) {
                 const parentId = Math.floor(i * Math.random())
-                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: '', type: "", units: "", children: [] };
+                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: '', type: "", units: "", children: [], annotation: '' };
                 addNode(temp);
                 addChild(parentId, i);
             }
@@ -67,7 +68,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         setChildren(getChildNodes(nodeId));
     };
 
-    console.log("currentNode", itemId, currentNode)
+    // console.log("currentNode", itemId, currentNode)
 
     return (
         <>
@@ -76,6 +77,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
             <div className="metadata-container">
                 <div className="tree">
                     <MetadataTreeDisplay
+                        currentNode={currentNode}
                         reconstructNestedJSON={reconstructNestedJSON}
                         setCurrentNode={handleNodeSelect}
                         isLocked={errors.length}
@@ -117,9 +119,11 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                                     />
                                 </span>
                             )) : (
-                                <button disabled={errors.length} onClick={() => handleAddChild(itemId)}>
-                                    +
-                                </button>
+                                <SquarePlus
+                                    style={{ width: 20, cursor: "pointer", fill: 'white' }}
+                                    disabled={errors.length}
+                                    onClick={() => handleAddChild(itemId)}
+                                />
                             )
                         }
                     </span>

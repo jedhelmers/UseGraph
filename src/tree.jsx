@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-const TreeNode = ({ node, isLocked, setCurrentNode }) => {
+const TreeNode = ({ node, isLocked, setCurrentNode, currentNode }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
 
@@ -19,7 +19,7 @@ const TreeNode = ({ node, isLocked, setCurrentNode }) => {
 
     return (
         <li>
-            <div className='row'>
+            <div className={['row', node?.id === currentNode?.id ? 'selected' : ''].join(' ')} id={node.id}>
                 <button disabled={isLocked} onClick={toggleExpand} className='expand'>
                     {hasChildren ? (isExpanded ? '[-] ' : '[+] ') : ''}
                 </button>
@@ -30,7 +30,7 @@ const TreeNode = ({ node, isLocked, setCurrentNode }) => {
             {hasChildren && isExpanded && (
                 <ul className='collapsible'>
                     {node.children.map(child => (
-                        <TreeNode key={child.id} isLocked={isLocked} node={child} setCurrentNode={setCurrentNode} />
+                        <TreeNode key={child.id} isLocked={isLocked} node={child} setCurrentNode={setCurrentNode} currentNode={currentNode} />
                     ))}
                 </ul>
             )}
@@ -39,20 +39,20 @@ const TreeNode = ({ node, isLocked, setCurrentNode }) => {
 };
 
 
-const Tree = ({ data, isLocked, setCurrentNode }) => {
+const Tree = ({ data, isLocked, setCurrentNode, currentNode }) => {
     return (
         <ul>
-            <TreeNode isLocked={isLocked} setCurrentNode={setCurrentNode} node={data} />
+            <TreeNode isLocked={isLocked} setCurrentNode={setCurrentNode} node={data} currentNode={currentNode} />
         </ul>
     );
 };
 
-const MetadataTreeDisplay = ({ rootId=1, isLocked, reconstructNestedJSON, setCurrentNode }) => {
+const MetadataTreeDisplay = ({ rootId=1, isLocked, reconstructNestedJSON, setCurrentNode, currentNode }) => {
     const nestedData = reconstructNestedJSON(rootId);
 
     return (
         <div className='navigation-tree'>
-            {nestedData ? <Tree isLocked={isLocked} setCurrentNode={setCurrentNode} data={nestedData} /> : <p>Loading tree...</p>}
+            {nestedData ? <Tree isLocked={isLocked} setCurrentNode={setCurrentNode} data={nestedData} currentNode={currentNode}/> : <p>Loading tree...</p>}
         </div>
     );
 };

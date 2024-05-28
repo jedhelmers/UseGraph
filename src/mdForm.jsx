@@ -1,4 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { ReactComponent as TrashCan} from './assets/trash-can.svg';
+import { ReactComponent as DownAlt} from './assets/level-down-alt.svg';
+import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
+import { ReactComponent as SquarePlusFill} from './assets/square-plus-fill.svg';
+
+
+const TYPES = [
+    '--------',
+    'Automatic',
+    'Boolean',
+    'Float',
+    'Integer',
+    'Link',
+    'String'
+]
 
 
 const MetadataForm = ({
@@ -71,25 +86,32 @@ const MetadataForm = ({
             <div className='space-between'>
                 {
                     !isRoot &&
-                        <button disabled={isLocked} onClick={() => handleNodeSelect(id)}>
-                            View This Child
-                        </button>
+                    <>
+                        <DownAlt
+                            style={{ width: 10, cursor: "pointer" }}
+                            disabled={isLocked}
+                            onClick={() => handleNodeSelect(id)}
+                        />
+                    </>
                 }
                 {
                     isRoot &&
                         <div className='row space-between full-width'>
                             <div></div>
-                            <button disabled={isLocked} onClick={() => addChild(parentId)}>
-                                +
-                            </button>
-                            <button disabled={isLocked} onClick={() => {
-                                handleNodeSelect(parentId)
-                                removeNode(id)
-                            }}>
-                                -
-                            </button>
+                            <SquarePlusFill
+                                style={{ width: 20, cursor: "pointer" }}
+                                disabled={isLocked}
+                                onClick={() => addChild(parentId)}
+                            />
                         </div>
                 }
+                <TrashCan
+                    style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
+                    disabled={isLocked} onClick={() => {
+                        handleNodeSelect(parentId)
+                        removeNode(id)
+                    }}
+                />
             </div>
             <div className='form-group col' ref={keynameRef}>
                 <label htmlFor='metadata-row-key' className='font-weight-bold'>Keyname:</label>
@@ -117,13 +139,18 @@ const MetadataForm = ({
             </div>
             <div className='form-group col'>
                 <label>Type:</label>
-                <input
+                <select
                     className='form-control form-control-ht'
-                    type="text"
                     name="type"
                     value={metadata.type}
                     onChange={handleChange}
-                />
+                >
+                    {TYPES.map(type => (
+                        <option key={type} value={type}>
+                            {type}
+                        </option>
+                    ))}
+                </select>
             </div>
             <div className='form-group col'>
                 <label>Units:</label>
@@ -135,12 +162,24 @@ const MetadataForm = ({
                     onChange={handleChange}
                 />
             </div>
+            <div className='form-group col'>
+                <label>Annotation:</label>
+                <input
+                    className='form-control form-control-ht'
+                    type="text"
+                    name="annotation"
+                    value={metadata.annotation}
+                    onChange={handleChange}
+                />
+            </div>
             <div>
                 {
                     !isRoot &&
-                        <button disabled={isLocked} onClick={() => addChild(parentId)}>
-                            +
-                        </button>
+                        <SquarePlus
+                            style={{ width: 20, cursor: "pointer", fill: 'white' }}
+                            disabled={isLocked}
+                            onClick={() => addChild(parentId)}
+                        />
                 }
             </div>
         </div>
