@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { ReactComponent as CaretDown} from './assets/caret-down.svg';
+import { ReactComponent as CaretRight} from './assets/caret-right.svg';
 
 
 const TreeNode = ({ node, isLocked, setCurrentNode, currentNode }) => {
@@ -21,7 +23,13 @@ const TreeNode = ({ node, isLocked, setCurrentNode, currentNode }) => {
         <li>
             <div className={['row', node?.id === currentNode?.id ? 'selected' : ''].join(' ')} id={node.id}>
                 <button disabled={isLocked} onClick={toggleExpand} className='expand'>
-                    {hasChildren ? (isExpanded ? '[-] ' : '[+] ') : ''}
+                    {
+                        hasChildren ? (
+                            isExpanded ?
+                            <CaretDown style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }}/> :
+                            <CaretRight style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }}/>
+                        ) : ''
+                    }
                 </button>
                 <button disabled={isLocked} onClick={handleNodeSelect} className='navigate'>
                     {node.keyname}
