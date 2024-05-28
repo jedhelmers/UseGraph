@@ -5,7 +5,7 @@ import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 const MetadataDisplay = ({ itemId = 1, setItemId }) => {
-    const { updateNode, setCurrentNode, getNode, addNode, addChild, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
+    const { updateNode, setCurrentNode, getNode, addNode, addChild, getParentIds, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
     const [children, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
@@ -18,6 +18,13 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         addNode(newChildNode);
         addChild(id, newChildId);
     };
+
+    // useEffect(() => {
+    //     console.log(currentNode)
+    //     if (currentNode?.id) {
+    //         console.log('getParentIds', getParentIds(currentNode.id))
+    //     }
+    // }, [getParentIds])
 
     const errorHandler = (id, isValid) => {
         if (!isValid) {
@@ -81,6 +88,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                         reconstructNestedJSON={reconstructNestedJSON}
                         setCurrentNode={handleNodeSelect}
                         isLocked={errors.length}
+                        parentChain={getParentIds(currentNode?.id)}
                     />
                 </div>
                 <div>

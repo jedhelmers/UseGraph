@@ -6,7 +6,7 @@ const useGraph = () => {
     const [currentChildren, setCurrentChildren] = useState([]);
 
     const addNode = useCallback((metadataItem) => {
-        setNodes(prev => new Map(prev).set(metadataItem.id, metadataItem));
+        setNodes(prev => new Map(prev).set(metadataItem.id, { ...metadataItem, parent: null, children: [] }));
     }, []);
 
     const setCurrentNode = useCallback((id) => {
@@ -39,12 +39,30 @@ const useGraph = () => {
         setNodes(prev => {
             const newNodes = new Map(prev);
             const parentNode = newNodes.get(parentId);
-            if (parentNode && !parentNode.children.includes(childId)) {
-                parentNode.children.push(childId);
+            const childNode = newNodes.get(childId);
+
+            if (parentNode && childNode) {
+                if (!parentNode.children.includes(childId)) {
+                    parentNode.children.push(childId);
+                    newNodes.set(childId, { ...childNode, parent: parentId });
+                }
             }
             return newNodes;
         });
     }, []);
+
+    const getParentIds = useCallback((nodeId) => {
+        const parentIds = [];
+        let currentNode = nodes.get(nodeId);
+
+        while (currentNode && currentNode.parent !== null) {
+            parentIds.push(currentNode.parent);
+            currentNode = nodes.get(currentNode.parent);
+        }
+
+        return parentIds;
+    }, [nodes]);
+
 
     const removeNode = useCallback((id) => {
         setNodes(prev => {
@@ -111,6 +129,7 @@ const useGraph = () => {
         removeNode,
         getChildNodes,
         reconstructNestedJSON,
+        getParentIds,
         currentChildren
     };
 };

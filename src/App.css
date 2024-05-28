@@ -202,7 +202,13 @@ label.error {
 }
 
 .navigation-tree * .row.selected {
-  background-color: rgba(0, 0, 0, .25);
+  background-color: rgba(255, 255, 255, .48);
+  color: #161d32 !important;
+  font-weight: bold;
+}
+
+.navigation-tree * .row.parent-selected {
+  background-color: rgba(0, 0, 0, .125);
 }
 
 .navigation-tree * button {
@@ -210,8 +216,9 @@ label.error {
   padding: 8px;
   background-color: inherit;
   text-align: left;
-  color: white;
+  color: inherit;
   font-size: 14px;
+  font-weight: inherit
   /* max-width: 1900px;
   min-width: 560px; */
   /* box-sizing: border-box; */
