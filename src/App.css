@@ -190,6 +190,9 @@ label.error {
 .navigation-tree {
   /* margin-left: 20px; */
   overflow-x: scroll;
+  border-radius: 3px;
+  height: 100%;
+  border: 1px dashed rgba(255, 255, 255, .25);
   /* max-width: 240px; */
 }
 
@@ -207,8 +210,12 @@ label.error {
   font-weight: bold;
 }
 
+.navigation-tree * .row.selected:hover {
+  background-color: rgba(255, 255, 255, .58);
+}
+
 .navigation-tree * .row.parent-selected {
-  background-color: rgba(0, 0, 0, .125);
+  background-color: rgba(147, 209, 255, .25);
 }
 
 .navigation-tree * button {
@@ -264,7 +271,7 @@ ul.collapsible {
 
 ul.collapsible ul {
   list-style: none;
-  padding-left: 20px;
+  /* padding-left: 20px; */
   position: relative;
 }
 
@@ -277,7 +284,7 @@ ul.collapsible li::before {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: -12px;
+  left: -20px;
   width: 1px;
   background: rgba(147, 209, 255, .25);
 }
@@ -298,3 +305,31 @@ ul.collapsible li ul::before {
 }
 
 /* Vertical line for collapsing */
+
+.card-item {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+
+.reverse-v {
+  flex-direction: column-reverse;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.link-box {
+  width: 100%;
+  min-height: 120px;
+  background-color: #161d32;
+}
