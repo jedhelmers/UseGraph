@@ -5,7 +5,7 @@ import './metadata.scss'
 import MetadataDisplay from './mdDisplay'
 
 function App() {
-  const [itemId, setItemId] = useState(1)
+  const [itemId, setItemId] = useState('root')
 
   return (
     <div className="App">

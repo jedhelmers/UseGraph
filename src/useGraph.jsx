@@ -17,7 +17,7 @@ const useGraph = () => {
             const {keyname, units, value, link, annotation, type} = node
 
             return {
-                keyName:keyname,
+                keyName: keyname,
                 units,
                 link: {
                     value,
@@ -30,11 +30,13 @@ const useGraph = () => {
 
         // Find root nodes (nodes without a parent)
         const rootNodes = [];
+
         for (const [id, node] of nodes) {
             if (node.parent === null) {
                 rootNodes.push(buildTree(id));
             }
         }
+
         return rootNodes;
     };
 

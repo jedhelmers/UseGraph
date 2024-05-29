@@ -65,7 +65,7 @@ const Tree = ({ data, parentChain, isLocked, setCurrentNode, currentNode }) => {
     );
 };
 
-const MetadataTreeDisplay = ({ rootId=1, isLocked, reconstructNestedJSON, setCurrentNode, currentNode, parentChain }) => {
+const MetadataTreeDisplay = ({ rootId=0, isLocked, reconstructNestedJSON, setCurrentNode, currentNode, parentChain }) => {
     const nestedData = reconstructNestedJSON(rootId);
 
     return (

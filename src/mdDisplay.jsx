@@ -4,7 +4,13 @@ import MetadataForm from './mdForm';
 import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
-const MetadataDisplay = ({ itemId = 1, setItemId }) => {
+
+const metadataItem = (id, keyname, parentId) => (
+    { id, keyname, parentId, value: "", type: "", units: "", children: [], annotation: '' }
+)
+
+
+const MetadataDisplay = ({ itemId = 0, setItemId }) => {
     const { updateNode, setCurrentNode, exportNode, getNode, addNode, addChild, getParentIds, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
     const [children, setChildren] = useState([]);
@@ -18,13 +24,6 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         addNode(newChildNode);
         addChild(id, newChildId);
     };
-
-    // useEffect(() => {
-    //     console.log(currentNode)
-    //     if (currentNode?.id) {
-    //         console.log('getParentIds', getParentIds(currentNode.id))
-    //     }
-    // }, [getParentIds])
 
     const errorHandler = (id, isValid) => {
         if (!isValid) {
@@ -43,14 +42,14 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
 
     // Load initial nodes - runs once
     useEffect(() => {
-        // Assuming 1 means initial load
-        if (itemId === 1) {
-            let item1 = { id: 0, keyname: "key1", value: "", type: "", units: "", children: [], annotation: '' };
+        if (itemId === 'root') {
+            let item1 = metadataItem(0, 'root', null);
             addNode(item1);
+            addChild(null, 1);
 
             for (let i = 1; i < 100; i++) {
                 const parentId = Math.floor(i * Math.random())
-                let temp = { parentId: parentId, id: i, keyname: `key${i}`, value: '', type: "", units: "", children: [], annotation: '' };
+                let temp = metadataItem(i, `key${i}`, parentId)
                 addNode(temp);
                 addChild(parentId, i);
             }
@@ -62,10 +61,10 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
     }, [errors])
 
     useEffect(() => {
-        setCurrentNodeState(getNode(itemId));
-        setChildren(getChildNodes(itemId));
+        const _itemId = itemId === 'root' ? 0 : itemId
+        setCurrentNodeState(getNode(_itemId));
+        setChildren(getChildNodes(_itemId));
     }, [itemId, getNode, getChildNodes, currentNode]);
-
 
     const handleNodeSelect = (nodeId) => {
         if (nodeId !== undefined) {
@@ -76,8 +75,6 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
         setCurrentNodeState(getNode(nodeId));
         setChildren(getChildNodes(nodeId));
     };
-
-    // console.log("currentNode", itemId, currentNode)
 
     return (
         <>
@@ -94,7 +91,7 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                     />
                 </div>
                 <div>
-                    {currentNode && (
+                    {currentNode && currentNode.parentId !== null && (
                         <MetadataForm
                             isRoot={true}
                             id={itemId}
