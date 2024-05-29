@@ -121,16 +121,29 @@ const MetadataForm = ({
                                     />
                                 </div>
                         }
-                        {
-                            !isRoot &&
-                            <>
-                                <DownAlt
-                                    style={{ width: 10, cursor: "pointer" }}
-                                    disabled={isLocked}
-                                    onClick={() => handleNodeSelect(id)}
-                                />
-                            </>
-                        }
+                        <div>
+                            {
+                                showTrash &&
+                                    <TrashCan
+                                        style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
+                                        disabled={isLocked}
+                                        onClick={() => {
+                                            handleNodeSelect(parentId)
+                                            removeNode(id)
+                                        }}
+                                    />
+                            }
+                            {
+                                !isRoot &&
+                                <>
+                                    <DownAlt
+                                        style={{ width: 10, cursor: "pointer" }}
+                                        disabled={isLocked}
+                                        onClick={() => handleNodeSelect(id)}
+                                    />
+                                </>
+                            }
+                        </div>
                         <div></div>
                     </div>
 
@@ -205,17 +218,6 @@ const MetadataForm = ({
                 <div>
                     <div className='space-between vertical full-height'>
                         <div>
-                            {
-                                showTrash &&
-                                    <TrashCan
-                                        style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
-                                        disabled={isLocked}
-                                        onClick={() => {
-                                            handleNodeSelect(parentId)
-                                            removeNode(id)
-                                        }}
-                                    />
-                            }
                             <input
                                 type='checkbox'
                                 disabled={isLocked}
