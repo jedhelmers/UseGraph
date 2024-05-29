@@ -343,3 +343,12 @@ ul.collapsible li ul::before {
   min-height: 120px;
   background-color: #161d32;
 }
+
+.grid-button-bar-top {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+}
+
+.center {
+  justify-content: center;
+}

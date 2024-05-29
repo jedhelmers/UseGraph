@@ -109,7 +109,7 @@ const MetadataForm = ({
                 {/* Middle */}
                 <div>
                     <div className='full-width space-between'>
-                        <div></div>
+                        <div className='full-width space-between'></div>
                         {
                             isRoot &&
                                 <div className=''>
