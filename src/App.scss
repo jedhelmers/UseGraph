@@ -1,3 +1,5 @@
+@import "variables";
+
 .App {
   text-align: left;
   font-size: 12px;
@@ -216,6 +218,14 @@ label.error {
 
 .navigation-tree * .row.parent-selected {
   background-color: rgba(147, 209, 255, .25);
+}
+
+.navigation-tree * .row.selected.error {
+  background-color: $ht-color-error;
+}
+
+.navigation-tree * .row.parent-selected.error {
+  background-color: rgba(255, 0, 0, .158);
 }
 
 .navigation-tree * button {

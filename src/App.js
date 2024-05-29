@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import './metadata.scss'
 import MetadataDisplay from './mdDisplay'
 

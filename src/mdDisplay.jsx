@@ -36,8 +36,6 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                 errors.filter(_id => _id !== id)
             )
         }
-
-        console.log(exportNode())
     }
 
     // Load initial nodes - runs once
@@ -80,6 +78,10 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
         <>
             <h1>Current Metadata Node</h1>
 
+            <button onClick={() => {
+                console.log(exportNode())
+            }}>Export</button>
+
             <div className="metadata-container">
                 <div className="tree">
                     <MetadataTreeDisplay
@@ -88,6 +90,7 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                         setCurrentNode={handleNodeSelect}
                         isLocked={errors.length}
                         parentChain={getParentIds(currentNode?.id)}
+                        errors={errors}
                     />
                 </div>
                 <div>
