@@ -1,9 +1,42 @@
 import { useState, useCallback, useEffect } from 'react';
 
+
 const useGraph = () => {
     const [nodes, setNodes] = useState(new Map());
     const [currentNodeId, setCurrentNodeId] = useState(null);
     const [currentChildren, setCurrentChildren] = useState([]);
+
+    const exportNode = () => {
+        const buildTree = (nodeId) => {
+            const node = nodes.get(nodeId);
+
+            if (!node) {
+                return null;
+            }
+
+            const {keyname, units, value, link, annotation, type} = node
+
+            return {
+                keyName:keyname,
+                units,
+                link: {
+                    value,
+                    type,
+                },
+                annotation,
+                children: node.children.map(buildTree)
+            };
+        };
+
+        // Find root nodes (nodes without a parent)
+        const rootNodes = [];
+        for (const [id, node] of nodes) {
+            if (node.parent === null) {
+                rootNodes.push(buildTree(id));
+            }
+        }
+        return rootNodes;
+    };
 
     const addNode = useCallback((metadataItem) => {
         setNodes(prev => new Map(prev).set(metadataItem.id, { ...metadataItem, parent: null, children: [] }));
@@ -94,6 +127,7 @@ const useGraph = () => {
 
     const reconstructNestedJSON = useCallback((rootId) => {
         const rootNode = nodes.get(rootId);
+
         if (!rootNode) {
             return null;
         }
@@ -130,6 +164,7 @@ const useGraph = () => {
         getChildNodes,
         reconstructNestedJSON,
         getParentIds,
+        exportNode,
         currentChildren
     };
 };

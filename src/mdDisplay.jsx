@@ -5,7 +5,7 @@ import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 const MetadataDisplay = ({ itemId = 1, setItemId }) => {
-    const { updateNode, setCurrentNode, getNode, addNode, addChild, getParentIds, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
+    const { updateNode, setCurrentNode, exportNode, getNode, addNode, addChild, getParentIds, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
     const [children, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
@@ -37,6 +37,8 @@ const MetadataDisplay = ({ itemId = 1, setItemId }) => {
                 errors.filter(_id => _id !== id)
             )
         }
+
+        console.log(exportNode())
     }
 
     // Load initial nodes - runs once
