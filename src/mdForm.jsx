@@ -36,6 +36,7 @@ const MetadataForm = ({
     isRoot,
     errorHandler
 }) => {
+    const [showTrash, setShowTrash] = useState(false)
     const [formData, setFormData] = useState({ ...metadata });
     const [showLinkBox, setShowLinkBox] = useState(false)
     const cardRef = useRef(null)
@@ -204,15 +205,22 @@ const MetadataForm = ({
                 <div>
                     <div className='space-between vertical full-height'>
                         <div>
-                            <TrashCan
-                                style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
+                            {
+                                showTrash &&
+                                    <TrashCan
+                                        style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
+                                        disabled={isLocked}
+                                        onClick={() => {
+                                            handleNodeSelect(parentId)
+                                            removeNode(id)
+                                        }}
+                                    />
+                            }
+                            <input
+                                type='checkbox'
                                 disabled={isLocked}
-                                onClick={() => {
-                                    handleNodeSelect(parentId)
-                                    removeNode(id)
-                                }}
+                                onChange={(e) => setShowTrash(e.target.checked)}
                             />
-                            <input type='checkbox'/>
                         </div>
                         <Link
                             style={{ width: 20, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}

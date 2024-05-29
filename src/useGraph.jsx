@@ -14,7 +14,7 @@ const useGraph = () => {
                 return null;
             }
 
-            const {keyname, units, value, link, annotation, type} = node
+            const {keyname, units, value, link, annotation, type, ...rest} = node
 
             return {
                 keyName: keyname,
@@ -24,6 +24,7 @@ const useGraph = () => {
                     type,
                 },
                 annotation,
+                ...rest,
                 children: node.children.map(buildTree)
             };
         };
@@ -32,7 +33,7 @@ const useGraph = () => {
         const rootNodes = [];
 
         for (const [id, node] of nodes) {
-            if (node.parent === null) {
+            if (node.parentId === null) {
                 rootNodes.push(buildTree(id));
             }
         }
@@ -41,7 +42,7 @@ const useGraph = () => {
     };
 
     const addNode = useCallback((metadataItem) => {
-        setNodes(prev => new Map(prev).set(metadataItem.id, { ...metadataItem, parent: null, children: [] }));
+        setNodes(prev => new Map(prev).set(metadataItem.id, { parentId: null, ...metadataItem, children: [] }));
     }, []);
 
     const setCurrentNode = useCallback((id) => {
@@ -79,7 +80,7 @@ const useGraph = () => {
             if (parentNode && childNode) {
                 if (!parentNode.children.includes(childId)) {
                     parentNode.children.push(childId);
-                    newNodes.set(childId, { ...childNode, parent: parentId });
+                    newNodes.set(childId, { ...childNode, parentId });
                 }
             }
             return newNodes;
@@ -90,9 +91,9 @@ const useGraph = () => {
         const parentIds = [];
         let currentNode = nodes.get(nodeId);
 
-        while (currentNode && currentNode.parent !== null) {
-            parentIds.push(currentNode.parent);
-            currentNode = nodes.get(currentNode.parent);
+        while (currentNode && currentNode.parentId !== null) {
+            parentIds.push(currentNode.parentId);
+            currentNode = nodes.get(currentNode.parentId);
         }
 
         return parentIds;

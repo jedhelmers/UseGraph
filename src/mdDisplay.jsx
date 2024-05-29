@@ -5,6 +5,13 @@ import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 
+const uuidv4 = () => {
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
+}
+
+
 const metadataItem = (id, keyname, parentId) => (
     { id, keyname, parentId, value: "", type: "", units: "", children: [], annotation: '' }
 )
@@ -16,13 +23,13 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
     const [children, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
 
-    const handleAddChild = (id) => {
-        const newChildId = `child-${Math.random().toString(36).substr(2, 9)}`
-        let newChildData = { parentId: id, id: newChildId, keyname: "Node", value: "", type: "", units: "", children: [], annotation: '' }
-
+    const handleAddChild = (parentId) => {
+        const _parentId = parentId === 'root' ? 0 : parentId
+        const newChildId = uuidv4()
+        let newChildData = metadataItem(newChildId, 'Node', _parentId)
         const newChildNode = { id: newChildId, ...newChildData, children: [] };
         addNode(newChildNode);
-        addChild(id, newChildId);
+        addChild(_parentId, newChildId);
     };
 
     const errorHandler = (id, isValid) => {
