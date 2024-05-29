@@ -158,6 +158,11 @@ const MetadataForm = ({
                             onChange={handleChange}
                         />
                     </div>
+                    {
+                        showLinkBox && (
+                            <LinkBox />
+                        )
+                    }
                     <div className='form-group col'>
                         <label>Type:</label>
                         <select
@@ -173,11 +178,6 @@ const MetadataForm = ({
                             ))}
                         </select>
                     </div>
-                    {
-                        showLinkBox && (
-                            <LinkBox />
-                        )
-                    }
                     <div className='form-group col'>
                         <label>Units:</label>
                         <input
