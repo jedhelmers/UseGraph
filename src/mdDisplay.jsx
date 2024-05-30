@@ -5,6 +5,10 @@ import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 
+const KEYNAMES = ['Stuff', 'Junk']
+const UNITS = ['ft', 'inches', 'cm']
+
+
 const uuidv4 = () => {
     return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
         (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
@@ -115,6 +119,8 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                             errorHandler={errorHandler}
                             metadata={currentNode}
                             updateNode={updateNode}
+                            keynames={KEYNAMES}
+                            units={UNITS}
                             reconstructNestedJSON={reconstructNestedJSON}
                         />
                     )}
@@ -134,6 +140,8 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                                         errorHandler={errorHandler}
                                         metadata={getNode(id)}
                                         updateNode={updateNode}
+                                        keynames={KEYNAMES}
+                                        units={UNITS}
                                         reconstructNestedJSON={reconstructNestedJSON}
                                     />
                                 </span>

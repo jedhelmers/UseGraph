@@ -354,3 +354,41 @@ ul.collapsible li ul::before {
 .center {
   justify-content: center;
 }
+
+/* ComboBox.css */
+
+.form-group {
+  position: relative;
+  width: 100%;
+}
+
+.form-control-ht {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+ul.list-group {
+  position: absolute;
+  width: 100%;
+  max-height: 150px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow-y: auto;
+  border: 1px solid $ht-color-primary-black;
+  border-top: none;
+  background-color: $ht-color-primary-med-blue;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+  padding: 8px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.list-group-item:hover {
+  background-color: $ht-color-secondary-light-blue-opacity25;
+}

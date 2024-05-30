@@ -41,11 +41,94 @@ const validateValue = (valueRef, typeRef) => {
 }
 
 
+const ComboBox = ({ label, name, options, callback }) => {
+  const [inputValue, setInputValue] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const typeRef = useRef(null);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setFilteredOptions(
+      options.filter((keyname) =>
+        keyname.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+
+    if (callback) {
+        callback(e)
+    }
+  };
+
+  const handleOptionClick = (e) => {
+    setInputValue(e.target.innerText);
+    setFilteredOptions([]);
+
+    if (callback) {
+        console.log('CLICK')
+
+        callback({
+            target: {
+                name: name,
+                value: e.target.innerText
+            }
+        })
+    }
+  };
+
+  const handleClickOutside = (e) => {
+    if (typeRef.current && !typeRef.current.contains(e.target)) {
+      setFilteredOptions([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className='form-group col' ref={typeRef}>
+      <label>{label}:</label>
+      <input
+        className='form-control form-control-ht'
+        type="text"
+        name={name}
+        id="metadata-row-key"
+        value={inputValue}
+        onChange={handleChange}
+        autoComplete="off"
+      />
+      {filteredOptions.length > 0 && (
+        <ul className='list-group' style={{ position: 'absolute', zIndex: 1, top: 70 }}>
+          {filteredOptions.map((type, index) => (
+            <li
+              key={index}
+              className='list-group-item'
+              onClick={handleOptionClick}
+            >
+              {type}
+            </li>
+          ))}
+        </ul>
+      )}
+        <div className='metadata-row-value-key-error form-group col alert-danger rounded p-3 hidden'>
+            Empty keys are not allowed.
+        </div>
+    </div>
+  );
+};
+
+
 const MetadataForm = ({
     metadata,
     updateNode,
     addChild,
     removeNode,
+    keynames,
+    units,
     handleNodeSelect,
     isLocked,
     id,
@@ -177,6 +260,8 @@ const MetadataForm = ({
                         <div></div>
                     </div>
 
+                    <ComboBox name={'keyname'} label={'Test'} options={keynames} callback={handleChange}/>
+
                     <div className='form-group col' ref={keynameRef}>
                         <label htmlFor='metadata-row-key' className='font-weight-bold'>Keyname:</label>
                         <input
@@ -209,6 +294,35 @@ const MetadataForm = ({
                             <LinkBox />
                         )
                     }
+                    <div className='form-group col' ref={typeRef}>
+                        <label>Keyname:</label>
+                        <input
+                            className='form-control form-control-ht'
+                            type="text"
+                            name="keyname"
+                            id="metadata-row-key"
+                            value={metadata.keyname}
+                            onChange={handleChange}
+                        />
+                        <datalist
+                            className='form-control form-control-ht'
+                            style={{ zIndex: 1 }}
+                            value={metadata.type}
+                            onClick={(e) => {
+                                e.target.name = 'keyname'
+                                handleChange(e)
+                            }}
+                        >
+                            {keynames.map(type => (
+                                <option
+                                    key={type}
+                                    value={type}
+                                >
+                                    {type}
+                                </option>
+                            ))}
+                        </datalist>
+                    </div>
                     <div className='form-group col' ref={typeRef}>
                         <label>Type:</label>
                         <select
