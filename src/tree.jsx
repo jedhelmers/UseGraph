@@ -30,7 +30,10 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
             output = 'parent-selected'
         }
 
-        if (errors.includes(currentNode?.id)) {
+        // Search list of errors for matching id.
+        const regex = new RegExp(`.*-${currentNode?.id}$`, 'g')
+
+        if (errors.findIndex(error => error.match(regex)) > -1) {
             output += " error"
         }
 

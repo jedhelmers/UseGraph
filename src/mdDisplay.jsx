@@ -5,7 +5,7 @@ import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
 
-const KEYNAMES = ['Stuff']
+const KEYNAMES = ['Stuff', 'Junk']
 const UNITS = ['ft', 'inches', 'cm']
 
 
