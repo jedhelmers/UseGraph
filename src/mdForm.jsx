@@ -45,7 +45,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
     const [inputValue, setInputValue] = useState(value);
     const [filteredOptions, setFilteredOptions] = useState([]);
     const typeRef = useRef(null);
-  
+
     const handleChange = (e) => {
       const value = e.target.value;
       setInputValue(value);
@@ -54,16 +54,16 @@ const ComboBox = ({ label, value, name, options, callback }) => {
           option.toLowerCase().includes(value.toLowerCase())
         )
       );
-  
+
       if (callback) {
         callback(e);
       }
     };
-  
+
     const handleOptionClick = (option) => {
       setInputValue(option);
       setFilteredOptions([]);
-  
+
       if (callback) {
         callback({
           target: {
@@ -73,20 +73,20 @@ const ComboBox = ({ label, value, name, options, callback }) => {
         });
       }
     };
-  
+
     const handleClickOutside = (e) => {
       if (typeRef.current && !typeRef.current.contains(e.target)) {
         setFilteredOptions([]);
       }
     };
-  
+
     useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
       return () => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }, []);
-  
+
     return (
       <div className='combo-box' ref={typeRef}>
         <label>{label}:</label>
@@ -137,7 +137,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
     const keynameRef = useRef(null);
     const valueRef = useRef(null);
     const typeRef = useRef(null);
-  
+
     useEffect(() => {
       const card = cardRef.current;
       if (isRoot) {
@@ -148,58 +148,62 @@ const ComboBox = ({ label, value, name, options, callback }) => {
         card.classList.remove('parent-card');
       }
     }, [isRoot]);
-  
+
     useEffect(() => {
       setFormData({ ...metadata });
     }, [metadata]);
-  
+
     const isValueValid = (e) => {
       const { name, value } = e.target;
-  
+
       switch (name) {
         case 'keyname':
           const isKeyNameValid = !!value.length;
-          validationHandler(keynameRef, isKeyNameValid, 1);
+          validationHandler(name, keynameRef, isKeyNameValid, 1);
           break;
         case 'value':
         case 'type':
           const isValueFieldValid = validateValue(valueRef, typeRef);
-          validationHandler(valueRef, isValueFieldValid, 2);
-          validationHandler(typeRef, isValueFieldValid, 2);
+        //   console.log('isValueFieldValid', isValueFieldValid)
+          validationHandler('value', valueRef, isValueFieldValid, 2);
+          validationHandler('type', typeRef, isValueFieldValid, null);
           break;
         default:
           break;
       }
     };
-  
-    const validationHandler = (ref, isValid, refIndex) => {
-        const label = ref?.current?.children[0];
-        const errorMessage = ref?.current?.children[refIndex];
-      
-        try {
-          if (isValid) {
-            label.classList.remove('error-text');
-            errorMessage.classList.add('hidden');
-          } else {
-            label.classList.add('error-text');
-            errorMessage.classList.remove('hidden');
-          }
-        } catch (e) {
-          console.error(e);
+
+    const validationHandler = (name, ref, isValid, refIndex) => {
+        const _name = `${name}-${id}`
+        errorHandler(_name, isValid);
+
+        if (refIndex) {
+            const label = ref?.current?.children[0];
+            const errorMessage = ref?.current?.children[refIndex];
+
+            try {
+              if (isValid) {
+                label.classList.remove('error-text');
+                errorMessage.classList.add('hidden');
+              } else {
+                label.classList.add('error-text');
+                errorMessage.classList.remove('hidden');
+              }
+            } catch (e) {
+              console.error(e);
+            }
         }
-      
-        errorHandler(id, isValid);
-      };
-      
-  
+    };
+
+
     const handleChange = (e) => {
       const { name, value } = e.target;
       isValueValid(e);
-  
+
       const updatedNode = { ...metadata, [name]: value };
       updateNode(metadata.id, updatedNode);
     };
-  
+
     return (
       <div ref={cardRef} className='metadata-item card card-body card-ht metadata-card child-card mb-3'>
         <div className='card-item'>
@@ -213,7 +217,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
               />
             )}
           </div>
-  
+
           {/* Middle */}
           <div>
             <div className='full-width space-between'>
@@ -229,7 +233,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
                   </div>
                 )}
               </div>
-  
+
               <div>
                 {showTrash ? (
                   <TrashCan
@@ -255,7 +259,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
               </div>
               <div></div>
             </div>
-  
+
             <div className='form-group col' ref={keynameRef}>
               <ComboBox
                 value={metadata.keyname}
@@ -298,14 +302,20 @@ const ComboBox = ({ label, value, name, options, callback }) => {
               </select>
             </div>
             <div className='form-group col'>
-              <label>Units:</label>
-              <input
+                <ComboBox
+                    value={metadata.units}
+                    name='units'
+                    label='units'
+                    options={units}
+                    callback={handleChange}
+                />
+              {/* <input
                 className='form-control form-control-ht'
                 type='text'
                 name='units'
                 value={metadata.units}
                 onChange={handleChange}
-              />
+              /> */}
             </div>
             <div className='form-group col'>
               <label>Annotation:</label>
@@ -318,7 +328,7 @@ const ComboBox = ({ label, value, name, options, callback }) => {
               />
             </div>
           </div>
-  
+
           {/* Right */}
           <div>
             <div className='space-between vertical full-height'>

@@ -38,16 +38,13 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
 
     const errorHandler = (id, isValid) => {
         if (!isValid) {
-            if (!errors.includes(id)) {
-                setErrors([
-                    ...errors,
-                    id
-                ])
-            }
+            setErrors([
+                ...errors,
+                id
+            ])
         } else {
-            setErrors(
-                errors.filter(_id => _id !== id)
-            )
+            const new_errors = errors.filter(_id => _id !== id)
+            setErrors(new_errors)
         }
     }
 
