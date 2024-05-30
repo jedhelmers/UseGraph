@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ComboBox from './ComboBox.jsx'
+import LinkBox from './LinkBox.jsx'
 import { ReactComponent as TrashCan} from './assets/trash-can.svg';
 import { ReactComponent as Link} from './assets/link.svg';
 import { ReactComponent as DownAlt} from './assets/level-down-alt.svg';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 import { ReactComponent as SquarePlusFill} from './assets/square-plus-fill.svg';
-
 
 const TYPES = [
     '--------',
@@ -15,13 +16,6 @@ const TYPES = [
     'Link',
     'String'
 ]
-
-const LinkBox = () => {
-
-    return (
-        <div className='link-box'></div>
-    )
-}
 
 
 const validateValue = (valueRef, typeRef) => {
@@ -41,86 +35,7 @@ const validateValue = (valueRef, typeRef) => {
 }
 
 
-const ComboBox = ({ label, value, name, options, callback }) => {
-    const [inputValue, setInputValue] = useState(value);
-    const [filteredOptions, setFilteredOptions] = useState([]);
-    const typeRef = useRef(null);
-
-    const handleChange = (e) => {
-      const value = e.target.value;
-      setInputValue(value);
-      setFilteredOptions(
-        options.filter((option) =>
-          option.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-
-      if (callback) {
-        callback(e);
-      }
-    };
-
-    const handleOptionClick = (option) => {
-      setInputValue(option);
-      setFilteredOptions([]);
-
-      if (callback) {
-        callback({
-          target: {
-            name,
-            value: option,
-          },
-        });
-      }
-    };
-
-    const handleClickOutside = (e) => {
-      if (typeRef.current && !typeRef.current.contains(e.target)) {
-        setFilteredOptions([]);
-      }
-    };
-
-    useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
-
-    useEffect(() => {
-        setInputValue(value)
-    }, [value])
-
-    return (
-      <div className='combo-box' ref={typeRef}>
-        <label>{label}:</label>
-        <input
-          className='form-control form-control-ht'
-          type='text'
-          name={name}
-          value={inputValue}
-          onChange={handleChange}
-          autoComplete='off'
-        />
-        {filteredOptions.length > 0 && (
-          <ul className='list-group'>
-            {filteredOptions.map((option, index) => (
-              <li
-                key={index}
-                className='list-group-item'
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
-  };
-
-
-  const MetadataForm = ({
+const MetadataForm = ({
     metadata,
     updateNode,
     addChild,
@@ -133,9 +48,9 @@ const ComboBox = ({ label, value, name, options, callback }) => {
     parentId,
     isRoot,
     errorHandler
-  }) => {
+}) => {
     const [showTrash, setShowTrash] = useState(false);
-    const [formData, setFormData] = useState({ ...metadata });
+    const [_, setFormData] = useState({ ...metadata });
     const [showLinkBox, setShowLinkBox] = useState(false);
     const cardRef = useRef(null);
     const keynameRef = useRef(null);
@@ -153,9 +68,9 @@ const ComboBox = ({ label, value, name, options, callback }) => {
       }
     }, [isRoot]);
 
-    useEffect(() => {
-      setFormData({ ...metadata });
-    }, [metadata]);
+    // useEffect(() => {
+    //   setFormData({ ...metadata });
+    // }, [metadata]);
 
     const isValueValid = (e) => {
       const { name, value } = e.target;
@@ -168,7 +83,6 @@ const ComboBox = ({ label, value, name, options, callback }) => {
         case 'value':
         case 'type':
           const isValueFieldValid = validateValue(valueRef, typeRef);
-        //   console.log('isValueFieldValid', isValueFieldValid)
           validationHandler('value', valueRef, isValueFieldValid, 2);
           validationHandler('type', typeRef, isValueFieldValid, null);
           break;

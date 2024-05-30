@@ -384,9 +384,16 @@ ul.list-group {
 }
 
 .list-group-item {
-  padding: 8px;
   cursor: pointer;
+  padding: 12px;
+  font-weight: bold;
   margin: 0;
+  background-color: $ht-color-primary-med-blue;
+  color: $ht-color-secondary-white;
+}
+
+.list-group-item:nth-child(even) {
+  background-color: $ht-color-primary-dark-blue;
 }
 
 .list-group-item:hover {

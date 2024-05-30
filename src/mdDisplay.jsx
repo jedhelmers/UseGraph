@@ -16,15 +16,33 @@ const uuidv4 = () => {
 }
 
 
-const metadataItem = (id, keyname, parentId) => (
-    { id, keyname, parentId, value: "", type: "", units: "", children: [], annotation: '' }
-)
+const metadataItem = (id, keyname, parentId) => ({
+    id,
+    keyname,
+    parentId,
+    value: "",
+    type: "",
+    units: "",
+    children: [],
+    annotation: ''
+})
 
 
 const MetadataDisplay = ({ itemId = 0, setItemId }) => {
-    const { updateNode, setCurrentNode, exportNode, getNode, addNode, addChild, getParentIds, removeNode, getChildNodes, reconstructNestedJSON } = useGraph();
+    const {
+        updateNode,
+        setCurrentNode,
+        exportNode,
+        getNode,
+        addNode,
+        addChild,
+        getParentIds,
+        removeNode,
+        getChildNodes,
+        reconstructNestedJSON
+    } = useGraph();
     const [currentNode, setCurrentNodeState] = useState(null);
-    const [children, setChildren] = useState([]);
+    const [_, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
 
     const handleAddChild = (parentId) => {
