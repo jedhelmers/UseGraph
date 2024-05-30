@@ -24,7 +24,7 @@ const useGraph = () => {
                     type,
                 },
                 annotation,
-                ...rest,
+                // ...rest,
                 children: node.children.map(buildTree)
             };
         };

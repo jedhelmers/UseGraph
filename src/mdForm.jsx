@@ -24,6 +24,23 @@ const LinkBox = () => {
 }
 
 
+const validateValue = (valueRef, typeRef) => {
+    const value = valueRef.current.children[1].value
+    const type = typeRef.current.children[1].value
+
+    switch(type) {
+        case "Integer":
+            return Number.isInteger(+value)
+        case "Float":
+            return !!Number.parseFloat(+value)
+        case "Boolean":
+            return ['TRUE', 'FALSE'].includes(value.toUpperCase())
+        default:
+            return true
+    }
+}
+
+
 const MetadataForm = ({
     metadata,
     updateNode,
@@ -41,6 +58,8 @@ const MetadataForm = ({
     const [showLinkBox, setShowLinkBox] = useState(false)
     const cardRef = useRef(null)
     const keynameRef = useRef(null)
+    const valueRef = useRef(null)
+    const typeRef = useRef(null)
 
     useEffect(() => {
         const card = cardRef.current
@@ -63,22 +82,29 @@ const MetadataForm = ({
 
         switch (name) {
             case 'keyname':
-                const isValid = !!value?.length
-                validationHandler(keynameRef, isValid)
+                const isKeyNameValid = !!value?.length
+                validationHandler(keynameRef, isKeyNameValid)
+            case 'value':
+            case 'type':
+                const isValueValid = validateValue(valueRef, typeRef)
+                validationHandler(valueRef, isValueValid)
+                validationHandler(typeRef, isValueValid)
         }
     }
 
     const validationHandler = (ref, isValid) => {
-        const label = ref.current.children[0]
-        const errorMessage = ref.current.children[2]
+        const label = ref?.current?.children[0]
+        const errorMessage = ref?.current?.children[2]
 
-        if (isValid) {
-            label.classList.remove('error-text')
-            errorMessage.classList.add('hidden')
-        } else {
-            label.classList.add('error-text')
-            errorMessage.classList.remove('hidden')
-        }
+        try {
+            if (isValid) {
+                label.classList.remove('error-text')
+                errorMessage.classList.add('hidden')
+            } else {
+                label.classList.add('error-text')
+                errorMessage.classList.remove('hidden')
+            }
+        } catch (e) {}
 
         errorHandler(id, isValid)
     }
@@ -109,21 +135,23 @@ const MetadataForm = ({
                 {/* Middle */}
                 <div>
                     <div className='full-width space-between'>
-                        <div className='full-width space-between'></div>
-                        {
-                            isRoot &&
-                                <div className=''>
-                                    <div></div>
-                                    <SquarePlusFill
-                                        style={{ width: 20, cursor: "pointer" }}
-                                        disabled={isLocked}
-                                        onClick={() => addChild(parentId)}
-                                    />
-                                </div>
-                        }
+                        <div className='full-width space-between center'>
+                            {
+                                isRoot &&
+                                    <div className=''>
+                                        <div></div>
+                                        <SquarePlusFill
+                                            style={{ width: 20, cursor: "pointer" }}
+                                            disabled={isLocked}
+                                            onClick={() => addChild(parentId)}
+                                        />
+                                    </div>
+                            }
+                        </div>
+
                         <div>
                             {
-                                showTrash &&
+                                showTrash ? (
                                     <TrashCan
                                         style={{ width: 16, cursor: "pointer", fill: isRoot ? 'inherit' : 'white' }}
                                         disabled={isLocked}
@@ -132,6 +160,8 @@ const MetadataForm = ({
                                             removeNode(id)
                                         }}
                                     />
+                                ) : <div style={{ width: 16 }}></div>
+                                    
                             }
                             {
                                 !isRoot &&
@@ -161,7 +191,7 @@ const MetadataForm = ({
                             Empty keys are not allowed.
                         </div>
                     </div>
-                    <div className='form-group col'>
+                    <div className='form-group col' ref={valueRef}>
                         <label>Value:</label>
                         <input
                             className='form-control form-control-ht'
@@ -170,13 +200,16 @@ const MetadataForm = ({
                             value={metadata.value}
                             onChange={handleChange}
                         />
+                        <div className='metadata-row-value-key-error form-group col alert-danger rounded p-3 hidden'>
+                            Type validation error
+                        </div>
                     </div>
                     {
                         showLinkBox && (
                             <LinkBox />
                         )
                     }
-                    <div className='form-group col'>
+                    <div className='form-group col' ref={typeRef}>
                         <label>Type:</label>
                         <select
                             className='form-control form-control-ht'
