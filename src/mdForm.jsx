@@ -87,6 +87,10 @@ const ComboBox = ({ label, value, name, options, callback }) => {
       };
     }, []);
 
+    useEffect(() => {
+        setInputValue(value)
+    }, [value])
+
     return (
       <div className='combo-box' ref={typeRef}>
         <label>{label}:</label>
@@ -309,13 +313,6 @@ const ComboBox = ({ label, value, name, options, callback }) => {
                     options={units}
                     callback={handleChange}
                 />
-              {/* <input
-                className='form-control form-control-ht'
-                type='text'
-                name='units'
-                value={metadata.units}
-                onChange={handleChange}
-              /> */}
             </div>
             <div className='form-group col'>
               <label>Annotation:</label>
