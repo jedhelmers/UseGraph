@@ -350,6 +350,7 @@ ul.collapsible li ul::before {
   display: grid;
   grid-template-columns: 1fr 2fr;
   min-height: 100px;
+  color: $ht-color-secondary-white;
 }
 
 .link-box .body .tree {
