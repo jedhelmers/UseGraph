@@ -203,7 +203,13 @@ const MetadataForm = ({
                 Type validation error
               </div>
             </div>
-            {showLinkBox && <LinkBox />}
+            {showLinkBox && (
+                <LinkBox
+                    value={metadata.value}
+                    hideLinkBox={() => setShowLinkBox(false)}
+                    handleChange={handleChange}
+                />
+            )}
             <div className='form-group col' ref={typeRef}>
               <label>Type:</label>
               <select
@@ -223,7 +229,7 @@ const MetadataForm = ({
                 <ComboBox
                     value={metadata.units}
                     name='units'
-                    label='units'
+                    label='Units'
                     options={units}
                     callback={handleChange}
                 />

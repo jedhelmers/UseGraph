@@ -459,3 +459,21 @@ ul.list-group {
   font-size: 1.4rem;
   font-weight: bold;
 }
+
+.file-list-row {
+  padding: 8px;
+}
+
+.file-list-row:nth-child(odd) {
+  background-color: $ht-color-primary-dark-blue;
+}
+
+.file-list-row:nth-child(even) {
+  background-color: $ht-color-primary-med-blue;
+}
+
+.file-list-row.selected {
+  background-color: $ht-color-secondary-light-blue;
+  color: $ht-color-primary-black;
+  font-weight: bold;
+}
