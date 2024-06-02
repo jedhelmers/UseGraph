@@ -37,6 +37,7 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
         addNode,
         addChild,
         getParentIds,
+        getParentKeyNames,
         removeNode,
         getChildNodes,
         reconstructNestedJSON
@@ -93,6 +94,10 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
     }, [itemId, getNode, getChildNodes, currentNode]);
 
     const handleNodeSelect = (nodeId) => {
+        if (errors.length) {
+            return
+        }
+
         if (nodeId !== undefined) {
             setItemId(nodeId)
         }
@@ -106,69 +111,93 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
         <>
             <h1>Current Metadata Node</h1>
 
-            <button onClick={() => {
-                console.log(exportNode())
-            }}>Export</button>
-
-            <div className="metadata-container">
-                <div className="tree">
-                    <MetadataTreeDisplay
-                        currentNode={currentNode}
-                        reconstructNestedJSON={reconstructNestedJSON}
-                        setCurrentNode={handleNodeSelect}
-                        isLocked={errors.length}
-                        parentChain={getParentIds(currentNode?.id)}
-                        errors={errors}
-                    />
-                </div>
-                <div>
-                    {currentNode && currentNode.parentId !== null && (
-                        <MetadataForm
-                            isRoot={true}
-                            id={itemId}
-                            parentId={currentNode.parentId}
-                            removeNode={removeNode}
-                            isLocked={errors.length}
-                            addChild={handleAddChild}
-                            handleNodeSelect={handleNodeSelect}
-                            errorHandler={errorHandler}
-                            metadata={currentNode}
-                            updateNode={updateNode}
-                            keynames={KEYNAMES}
-                            units={UNITS}
+            <div className='full-width'>
+                <div className="metadata-container">
+                    <div className="tree">
+                        <MetadataTreeDisplay
+                            currentNode={currentNode}
                             reconstructNestedJSON={reconstructNestedJSON}
+                            setCurrentNode={handleNodeSelect}
+                            isLocked={errors.length}
+                            parentChain={getParentIds(currentNode?.id)}
+                            errors={errors}
                         />
-                    )}
-                    <h2>Children</h2>
-                    <span>
-                        {
-                            currentNode?.children?.length ? currentNode?.children.map((id) => (
-                                <span key={id}>
-                                    <MetadataForm
-                                        isRoot={false}
-                                        id={id}
-                                        parentId={itemId}
-                                        removeNode={removeNode}
-                                        isLocked={errors.length}
-                                        addChild={handleAddChild}
-                                        handleNodeSelect={handleNodeSelect}
-                                        errorHandler={errorHandler}
-                                        metadata={getNode(id)}
-                                        updateNode={updateNode}
-                                        keynames={KEYNAMES}
-                                        units={UNITS}
-                                        reconstructNestedJSON={reconstructNestedJSON}
+                    </div>
+                    <div>
+                        <div className='toolbar'>
+                            <button onClick={() => {
+                                console.log(exportNode()[0].children)
+                            }}>
+                                Export
+                            </button>
+
+                        </div>
+                        <div className='bread-crumbs'>
+                            {
+                                getParentKeyNames(currentNode?.id).reverse().map((node, i) => {
+                                    return (
+                                        <span
+                                            key={i}
+                                            onClick={() => handleNodeSelect(node?.id)}
+                                        >
+                                            {
+                                                ` ${node?.keyname} > `
+                                            }
+                                        </span>
+                                    )
+                                })
+                            }
+                            <span className='kaboose'>{currentNode?.keyname}</span>
+                        </div>
+
+                        {currentNode && currentNode.parentId !== null && (
+                            <MetadataForm
+                                isRoot={true}
+                                id={itemId}
+                                parentId={currentNode.parentId}
+                                removeNode={removeNode}
+                                isLocked={errors.length}
+                                addChild={handleAddChild}
+                                handleNodeSelect={handleNodeSelect}
+                                errorHandler={errorHandler}
+                                metadata={currentNode}
+                                updateNode={updateNode}
+                                keynames={KEYNAMES}
+                                units={UNITS}
+                                reconstructNestedJSON={reconstructNestedJSON}
+                            />
+                        )}
+                        <h2>Children</h2>
+                        <span>
+                            {
+                                currentNode?.children?.length ? currentNode?.children.map((id) => (
+                                    <span key={id}>
+                                        <MetadataForm
+                                            isRoot={false}
+                                            id={id}
+                                            parentId={itemId}
+                                            removeNode={removeNode}
+                                            isLocked={errors.length}
+                                            addChild={handleAddChild}
+                                            handleNodeSelect={handleNodeSelect}
+                                            errorHandler={errorHandler}
+                                            metadata={getNode(id)}
+                                            updateNode={updateNode}
+                                            keynames={KEYNAMES}
+                                            units={UNITS}
+                                            reconstructNestedJSON={reconstructNestedJSON}
+                                        />
+                                    </span>
+                                )) : (
+                                    <SquarePlus
+                                        style={{ width: 20, cursor: "pointer", fill: 'white' }}
+                                        disabled={errors.length}
+                                        onClick={() => handleAddChild(itemId)}
                                     />
-                                </span>
-                            )) : (
-                                <SquarePlus
-                                    style={{ width: 20, cursor: "pointer", fill: 'white' }}
-                                    disabled={errors.length}
-                                    onClick={() => handleAddChild(itemId)}
-                                />
-                            )
-                        }
-                    </span>
+                                )
+                            }
+                        </span>
+                    </div>
                 </div>
             </div>
         </>

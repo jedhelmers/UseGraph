@@ -80,19 +80,19 @@ ul > li:last-child:after {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  column-gap: 40px;
+  // column-gap: 40px;
 }
 
 .metadata-container > .tree {
   margin: 20px;
-  /* background-color: rgba(255, 255, 255, 0.1); */
+  margin-top: 0;
   background-color: #161d32;
-  /* max-width: 260px; */
 }
 
 .metadata-item {
   padding: 40px;
   margin: 20px;
+  margin-left: 0;
   background-color: rgba(255, 255, 255, 0.1);
   display: grid;
   grid-template-columns: 1fr;
@@ -476,4 +476,33 @@ ul.list-group {
   background-color: $ht-color-secondary-light-blue;
   color: $ht-color-primary-black;
   font-weight: bold;
+}
+
+.p-10 {
+  padding: 10px
+}
+
+.m-10 {
+  margin: 10px;
+}
+
+.toolbar {
+  padding: 20px;
+  margin-right: 20px;
+  background-color: $ht-color-secondary-light-blue-opacity25;
+  border: 1px solid $ht-color-secondary-light-blue-opacity25;
+}
+
+.bread-crumbs {
+  padding: 4px;
+  margin-right: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.bread-crumbs .kaboose {
+  font-weight: normal;
 }

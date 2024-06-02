@@ -260,9 +260,9 @@ const MetadataForm = ({
                 style={{ width: 20, cursor: 'pointer', fill: isRoot ? 'inherit' : 'white' }}
                 disabled={isLocked}
                 onClick={(e) => {
-                  e.target.value = 'Link';
-                  e.target.name = 'type';
-                  handleChange(e);
+                //   e.target.value = 'Link';
+                //   e.target.name = 'type';
+                //   handleChange(e);
                   setShowLinkBox(!showLinkBox);
                 }}
               />

@@ -4,6 +4,7 @@ import { getWorkspaces, getItems } from './utils.js'
 
 
 const LinkBox = ({ handleChange, value, hideLinkBox }) => {
+    const [savable, setSavable] = useState(false)
     const [workspaces, setWorkspaces] = useState([])
     const [selectedWorkspace, setSelectedWorkspace] = useState(null)
     const [selecteFile, setSelecteFile] = useState(null)
@@ -16,23 +17,26 @@ const LinkBox = ({ handleChange, value, hideLinkBox }) => {
     }
 
     const save = () => {
-        const e_value = {}
-        e_value.target = {
-            name: 'value',
-            value: fileList[selecteFile]
-        }
-        handleChange(e_value)
-        hideLinkBox()
-    }
-
-    useEffect(() => {
+        setSavable(true)
         const e_type = {}
         e_type.target = {
             name: 'type',
             value: 'Link'
         }
         handleChange(e_type)
-    }, [value])
+    }
+
+    useEffect(() => {
+        if (savable) {
+            const e_value = {}
+            e_value.target = {
+                name: 'value',
+                value: fileList[selecteFile]
+            }
+            handleChange(e_value)
+            hideLinkBox()
+        }
+    }, [savable])
 
     useEffect(() => {
         getWorkspaces().then(setWorkspaces)
@@ -53,6 +57,7 @@ const LinkBox = ({ handleChange, value, hideLinkBox }) => {
                     {
                         fileList.map((item, i) => (
                             <div
+                                key={i}
                                 className={['file-list-row', i === selecteFile ? 'selected' : ''].join(' ')}
                                 name='value'
                                 onClick={() => setSelecteFile(i)}

@@ -99,6 +99,16 @@ const useGraph = () => {
         return parentIds;
     }, [nodes]);
 
+    const getParentKeyNames = useCallback((nodeId) => {
+        const parentNodes = [];
+        const parentsIds = getParentIds(nodeId)
+
+        for (const parentId of parentsIds) {
+            parentNodes.push(nodes.get(parentId))
+        }
+
+        return parentNodes;
+    }, [nodes]);
 
     const removeNode = useCallback((id) => {
         setNodes(prev => {
@@ -167,6 +177,7 @@ const useGraph = () => {
         getChildNodes,
         reconstructNestedJSON,
         getParentIds,
+        getParentKeyNames,
         exportNode,
         currentChildren
     };
