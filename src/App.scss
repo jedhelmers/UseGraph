@@ -193,6 +193,11 @@ label.error {
   justify-content: space-between;
 }
 
+.flex-end {
+  display: flex;
+  justify-content: space-between;
+}
+
 .navigation-tree {
   /* margin-left: 20px; */
   overflow-x: scroll;

@@ -47,15 +47,19 @@ const MetadataForm = ({
     id,
     parentId,
     isRoot,
+    checked,
     errorHandler
 }) => {
-    const [showTrash, setShowTrash] = useState(false);
-    const [_, setFormData] = useState({ ...metadata });
+    const [showTrash, setShowTrash] = useState(checked);
     const [showLinkBox, setShowLinkBox] = useState(false);
     const cardRef = useRef(null);
     const keynameRef = useRef(null);
     const valueRef = useRef(null);
     const typeRef = useRef(null);
+
+    useEffect(() => {
+        setShowTrash(checked)
+    }, [checked])
 
     useEffect(() => {
       const card = cardRef.current;
@@ -152,10 +156,10 @@ const MetadataForm = ({
                 )}
               </div>
 
-              <div>
+              <div className='flex-end'>
                 {showTrash ? (
                   <TrashCan
-                    style={{ width: 16, cursor: 'pointer', fill: isRoot ? 'inherit' : 'white' }}
+                    style={{ paddingRight: 20, width: 16, cursor: 'pointer', fill: isRoot ? 'inherit' : 'white' }}
                     disabled={isLocked}
                     onClick={() => {
                       handleNodeSelect(parentId);
@@ -163,12 +167,12 @@ const MetadataForm = ({
                     }}
                   />
                 ) : (
-                  <div style={{ width: 16 }}></div>
+                  <div style={{ paddingRight: 20, width: 16 }}></div>
                 )}
                 {!isRoot && (
                   <>
                     <DownAlt
-                      style={{ width: 10, cursor: 'pointer' }}
+                      style={{ paddingRight: 20, width: 10, cursor: 'pointer' }}
                       disabled={isLocked}
                       onClick={() => handleNodeSelect(id)}
                     />
@@ -251,9 +255,12 @@ const MetadataForm = ({
             <div className='space-between vertical full-height'>
               <div>
                 <input
-                  type='checkbox'
-                  disabled={isLocked}
-                  onChange={(e) => setShowTrash(e.target.checked)}
+                    className="trash-checkbox"
+                    type='checkbox'
+                    id={id}
+                    checked={showTrash}
+                    disabled={isLocked}
+                    onChange={(e) => setShowTrash(e.target.checked)}
                 />
               </div>
               <Link

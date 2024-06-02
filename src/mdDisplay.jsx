@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useGraph from './useGraph';
 import MetadataForm from './mdForm';
+import { ReactComponent as TrashCan} from './assets/trash-can.svg';
 import { MetadataTreeDisplay } from './tree';
 import { ReactComponent as SquarePlus} from './assets/square-plus.svg';
 
@@ -29,6 +30,7 @@ const metadataItem = (id, keyname, parentId) => ({
 
 
 const MetadataDisplay = ({ itemId = 0, setItemId }) => {
+    const nodesRef = useRef(null)
     const {
         updateNode,
         setCurrentNode,
@@ -45,6 +47,7 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
     const [currentNode, setCurrentNodeState] = useState(null);
     const [_, setChildren] = useState([]);
     const [errors, setErrors] = useState([])
+    const [deleteChecked, setDeleteChecked] = useState(false)
 
     const handleAddChild = (parentId) => {
         const _parentId = parentId === 'root' ? 0 : parentId
@@ -84,8 +87,16 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
     }, []);
 
     useEffect(() => {
+        console.log(nodesRef)
+    }, [nodesRef])
+
+    useEffect(() => {
         console.log('errors', errors)
     }, [errors])
+
+    useEffect(() => {
+        setDeleteChecked(false)
+    }, [currentNode])
 
     useEffect(() => {
         const _itemId = itemId === 'root' ? 0 : itemId
@@ -130,7 +141,27 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                             }}>
                                 Export
                             </button>
+                            <input
+                                type='checkbox'
+                                checked={deleteChecked}
+                                onChange={(e) => setDeleteChecked(e.target.checked)}
+                            />
+                            {
+                                deleteChecked && (
+                                    <TrashCan
+                                        style={{ width: 16, cursor: 'pointer', fill: 'white' }}
+                                        onClick={() => {
+                                            for (const checkboxSpan of nodesRef.current.children) {
+                                                const checkbox = checkboxSpan.getElementsByClassName('trash-checkbox')[0]
 
+                                                if (checkbox?.checked) {
+                                                    removeNode(checkbox.id)
+                                                }
+                                            }
+                                        }}
+                                    />
+                                )
+                            }
                         </div>
                         <div className='bread-crumbs'>
                             {
@@ -164,11 +195,12 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                                 updateNode={updateNode}
                                 keynames={KEYNAMES}
                                 units={UNITS}
+                                checked={deleteChecked}
                                 reconstructNestedJSON={reconstructNestedJSON}
                             />
                         )}
                         <h2>Children</h2>
-                        <span>
+                        <span ref={nodesRef}>
                             {
                                 currentNode?.children?.length ? currentNode?.children.map((id) => (
                                     <span key={id}>
@@ -185,6 +217,7 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                                             updateNode={updateNode}
                                             keynames={KEYNAMES}
                                             units={UNITS}
+                                            checked={deleteChecked}
                                             reconstructNestedJSON={reconstructNestedJSON}
                                         />
                                     </span>
