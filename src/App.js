@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import logo from './logo.svg';
-import './App.scss';
-import './metadata.scss';
-import MetadataDisplay from './mdDisplay';
+import './styles/App.scss';
+import './styles/metadata.scss';
+import MetadataDisplay from './components/mdDisplay';
 
 /**
  * Metadata component that displays an app header with a logo,

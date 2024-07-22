@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ReactComponent as CaretDown } from './assets/caret-down.svg';
-import { ReactComponent as CaretRight } from './assets/caret-right.svg';
+import { ReactComponent as CaretDown } from '../assets/caret-down.svg';
+import { ReactComponent as CaretRight } from '../assets/caret-right.svg';
 
 const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, currentNode }) => {
     const [isExpanded, setIsExpanded] = useState(false);

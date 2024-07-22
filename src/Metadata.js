@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import MetadataDisplay from './mdDisplay';
+import MetadataDisplay from './components/mdDisplay';
 import logo from './logo.svg';
-import './App.scss';
-import './metadata.scss';
+import './styles/App.scss';
+import './styles/metadata.scss';
 
 /**
  * Metadata component serves as the main entry point for the metadata management feature.

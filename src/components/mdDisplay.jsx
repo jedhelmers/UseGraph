@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import useGraph from './useGraph';
+import useGraph from '../useGraph';
 import MetadataForm from './mdForm';
-import { ReactComponent as TrashCan } from './assets/trash-can.svg';
+import { ReactComponent as TrashCan } from '../assets/trash-can.svg';
 import { MetadataTreeDisplay } from './tree';
-import { ReactComponent as SquarePlus } from './assets/square-plus.svg';
+import { ReactComponent as SquarePlus } from '../assets/square-plus.svg';
 
 // TODO: Keynames
 const KEYNAMES = ['Stuff', 'Junk']

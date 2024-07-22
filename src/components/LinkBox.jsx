@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { WorkspaceTree } from './WorkspaceTree.jsx';
-import { getWorkspaces, getItems } from './utils.js';
+import { getWorkspaces, getItems } from '../utils.js';
 
 /**
  * LinkBox component that allows users to select a file from a workspace.

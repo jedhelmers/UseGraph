@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useGraph from './useGraph'; // Assuming the hook is in useGraph.js
+import useGraph from '../useGraph'; // Assuming the hook is in useGraph.js
 
 /**
  * MetadataComponent manages and displays a graph of nodes.

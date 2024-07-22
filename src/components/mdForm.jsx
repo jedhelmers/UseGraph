@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ComboBox from './ComboBox.jsx';
 import LinkBox from './LinkBox.jsx';
-import { ReactComponent as TrashCan } from './assets/trash-can.svg';
-import { ReactComponent as Link } from './assets/link.svg';
-import { ReactComponent as DownAlt } from './assets/level-down-alt.svg';
-import { ReactComponent as SquarePlus } from './assets/square-plus.svg';
-import { ReactComponent as SquarePlusFill } from './assets/square-plus-fill.svg';
+import { ReactComponent as TrashCan } from '../assets/trash-can.svg';
+import { ReactComponent as Link } from '../assets/link.svg';
+import { ReactComponent as DownAlt } from '../assets/level-down-alt.svg';
+import { ReactComponent as SquarePlus } from '../assets/square-plus.svg';
+import { ReactComponent as SquarePlusFill } from '../assets/square-plus-fill.svg';
 
 // TODO: Handle this better
 const TYPES = [

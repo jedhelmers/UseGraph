@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Custom hook for managing a graph of nodes with various utilities for interacting with the graph.
- * 
+ *
  * @returns {Object} - The object containing functions and state for managing the graph.
  */
 const useGraph = () => {
@@ -12,7 +12,7 @@ const useGraph = () => {
 
     /**
      * Recursively builds and exports the tree structure starting from root nodes.
-     * 
+     *
      * @returns {Array} - An array of root nodes with their children and metadata.
      */
     const exportNode = () => {
@@ -51,7 +51,7 @@ const useGraph = () => {
 
     /**
      * Adds a new node to the graph.
-     * 
+     *
      * @param {Object} metadataItem - The metadata for the new node, including an `id`.
      */
     const addNode = useCallback((metadataItem) => {
@@ -60,7 +60,7 @@ const useGraph = () => {
 
     /**
      * Sets the currently selected node by its ID.
-     * 
+     *
      * @param {string} id - The ID of the node to select.
      */
     const setCurrentNode = useCallback((id) => {
@@ -69,7 +69,7 @@ const useGraph = () => {
 
     /**
      * Retrieves the currently selected node.
-     * 
+     *
      * @returns {Object} - The currently selected node.
      */
     const getCurrentNode = useCallback(() => {
@@ -78,7 +78,7 @@ const useGraph = () => {
 
     /**
      * Retrieves a node by its ID.
-     * 
+     *
      * @param {string} id - The ID of the node to retrieve.
      * @returns {Object} - The node corresponding to the given ID.
      */
@@ -88,7 +88,7 @@ const useGraph = () => {
 
     /**
      * Updates an existing node with new data.
-     * 
+     *
      * @param {string} id - The ID of the node to update.
      * @param {Object} updates - The updates to apply to the node.
      */
@@ -108,7 +108,7 @@ const useGraph = () => {
 
     /**
      * Adds a child node to a parent node.
-     * 
+     *
      * @param {string} parentId - The ID of the parent node.
      * @param {string} childId - The ID of the child node.
      */
@@ -130,7 +130,7 @@ const useGraph = () => {
 
     /**
      * Retrieves the IDs of all parent nodes up the chain for a given node.
-     * 
+     *
      * @param {string} nodeId - The ID of the node to get parent IDs for.
      * @returns {Array} - An array of parent node IDs.
      */
@@ -148,7 +148,7 @@ const useGraph = () => {
 
     /**
      * Retrieves the parent nodes for a given node based on parent IDs.
-     * 
+     *
      * @param {string} nodeId - The ID of the node to get parent key names for.
      * @returns {Array} - An array of parent nodes.
      */
@@ -165,7 +165,7 @@ const useGraph = () => {
 
     /**
      * Removes a node and its references from the graph.
-     * 
+     *
      * @param {string} id - The ID of the node to remove.
      */
     const removeNode = useCallback((id) => {
@@ -188,7 +188,7 @@ const useGraph = () => {
 
     /**
      * Retrieves the child nodes of a given node.
-     * 
+     *
      * @param {string} nodeId - The ID of the node to get child nodes for.
      * @returns {Array} - An array of child nodes.
      */
@@ -204,7 +204,7 @@ const useGraph = () => {
 
     /**
      * Reconstructs the tree data starting from a root node.
-     * 
+     *
      * @param {string} rootId - The ID of the root node to start reconstructing the tree from.
      * @returns {Object|null} - The reconstructed tree structure or null if the root node is not found.
      */

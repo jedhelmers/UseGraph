@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ReactComponent as CaretDown } from './assets/caret-down.svg';
-import { ReactComponent as CaretRight } from './assets/caret-right.svg';
+import { ReactComponent as CaretDown } from '../assets/caret-down.svg';
+import { ReactComponent as CaretRight } from '../assets/caret-right.svg';
 
 /**
  * TreeNode component represents a single node in the tree structure.
