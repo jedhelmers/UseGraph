@@ -59,6 +59,11 @@ const LinkBox = ({ handleChange, value, hideLinkBox }) => {
     }, [savable]);
 
     useEffect(() => {
+        // TODO: Properly get workspaces
+        // If required: instead of returning a complete tree
+        // integrate API calls for more tree data
+        // TODO: Add pagination logic
+        // TODO: Display pagination
         getWorkspaces().then(setWorkspaces);
     }, []);
 

@@ -148,6 +148,7 @@ const useGraph = () => {
 
     /**
      * Retrieves the parent nodes for a given node based on parent IDs.
+     * Primary used for bread crumbs.
      *
      * @param {string} nodeId - The ID of the node to get parent key names for.
      * @returns {Array} - An array of parent nodes.

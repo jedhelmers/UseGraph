@@ -41,11 +41,11 @@ const metadataItem = (id, keyname, parentId) => ({
 
 /**
  * MetadataDisplay component displays and manages metadata nodes and their relationships.
- * 
- * Utilizes the `useGraph` hook to handle nodes, their addition, and their removal. It manages 
- * state for the current node, errors, and children, and provides functionality for adding and 
+ *
+ * Utilizes the `useGraph` hook to handle nodes, their addition, and their removal. It manages
+ * state for the current node, errors, and children, and provides functionality for adding and
  * removing nodes, and handling errors.
- * 
+ *
  * @param {object} props - Component props.
  * @param {number|string} props.itemId - ID of the current item to display.
  * @param {function} props.setItemId - Function to set the ID of the current item.
@@ -171,6 +171,12 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                             <button onClick={() => {
                                 console.log(exportNode()[0].children);
                             }}>
+                                {/* TODO: Import logic */}
+                                Import
+                            </button>
+                            <button onClick={() => {
+                                console.log(exportNode()[0].children);
+                            }}>
                                 Export
                             </button>
                             <input
@@ -199,6 +205,7 @@ const MetadataDisplay = ({ itemId = 0, setItemId }) => {
                         </div>
                         <div className='bread-crumbs'>
                             {
+                                // TODO: Update bread crumb styling
                                 getParentKeyNames(currentNode?.id).reverse().map((node, i) => (
                                     <span
                                         key={i}
