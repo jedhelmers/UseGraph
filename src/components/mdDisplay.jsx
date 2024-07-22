@@ -10,7 +10,6 @@ const KEYNAMES = ['Stuff', 'Junk']
 // TODO: Units
 const UNITS = ['ft', 'inches', 'cm']
 
-// TODO: Maybe handle node ids better?
 /**
  * Generates a UUID v4.
  * @return {string} A UUID v4 string.
