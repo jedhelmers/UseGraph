@@ -41,19 +41,19 @@
   }
 }
 
-ul {
+.navigation-tree-ul {
   list-style-type: none;
   padding: 0;
   margin-top: 0;
   margin-left: -20px;
 }
 
-ul > li {
+ul.navigation-tree-ul > li {
   margin-left: 20px;
   position: relative;
 }
 
-ul > li:before {
+.navigation-tree-ul > li:before {
   /* content: "";
   position: absolute;
   left: -20px;
@@ -62,7 +62,7 @@ ul > li:before {
   border-left: 2px solid #000; */
 }
 
-ul > li:after {
+.navigation-tree-ul > li:after {
   content: "";
   position: absolute;
   left: -18px;
@@ -71,7 +71,7 @@ ul > li:after {
   border-bottom: 2px solid #000;
 }
 
-ul > li:last-child:after {
+.navigation-tree-ul > li:last-child:after {
   height: 10px;
 }
 
@@ -265,7 +265,7 @@ label.error {
   background-color: #1f4167;
 }
 
-.navigation-tree * ul {
+.navigation-tree * .navigation-tree-ul {
   padding-left: 10px;
 }
 
@@ -280,7 +280,7 @@ label.error {
 
 /* Vertical line for collapsing */
 
-ul.collapsible {
+.navigation-tree-ul.collapsible {
   list-style: none;
   padding-left: 20px;
   position: relative;
@@ -288,17 +288,17 @@ ul.collapsible {
   margin: 0;
 }
 
-ul.collapsible ul {
+.navigation-tree-ul.collapsible .navigation-tree-ul {
   list-style: none;
   /* padding-left: 20px; */
   position: relative;
 }
 
-ul.collapsible li {
+.navigation-tree-ul.collapsible li {
   position: relative;
 }
 
-ul.collapsible li::before {
+.navigation-tree-ul.collapsible li::before {
   content: '';
   position: absolute;
   top: 0;
@@ -308,12 +308,12 @@ ul.collapsible li::before {
   background: rgba(147, 209, 255, .25);
 }
 
-ul.collapsible li:last-child::before {
+.navigation-tree-ul.collapsible li:last-child::before {
   /* height: 50%;
   top: 0; */
 }
 
-ul.collapsible li ul::before {
+.navigation-tree-ul.collapsible li .navigation-tree-ul::before {
   /* content: '';
   position: absolute;
   top: 0;
@@ -399,7 +399,7 @@ ul.collapsible li ul::before {
   box-sizing: border-box;
 }
 
-ul.list-group {
+.navigation-tree-ul.list-group {
   position: absolute;
   width: 100%;
   max-height: 150px;

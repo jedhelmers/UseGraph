@@ -71,7 +71,7 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
 
 const Tree = ({ data, parentChain, errors, isLocked, setCurrentNode, currentNode }) => {
     return (
-        <ul>
+        <ul className='workspace-tree-ul'>
             {data.map(node => (
                 <TreeNode
                     key={node.id}

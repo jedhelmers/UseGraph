@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
-import { ReactComponent as CaretDown} from './assets/caret-down.svg';
-import { ReactComponent as CaretRight} from './assets/caret-right.svg';
+import React, { useState } from 'react';
+import { ReactComponent as CaretDown } from './assets/caret-down.svg';
+import { ReactComponent as CaretRight } from './assets/caret-right.svg';
 
-
+/**
+ * TreeNode component represents a single node in the tree structure.
+ * It displays a node with expandable children and allows selection of the node.
+ *
+ * @param {Object} props - The properties object.
+ * @param {Object} props.node - The node data to be displayed.
+ * @param {Array} props.errors - List of error messages related to nodes.
+ * @param {Array} props.parentChain - List of parent node IDs in the current selection chain.
+ * @param {boolean} props.isLocked - Flag indicating if the node is locked.
+ * @param {Function} props.setCurrentNode - Function to set the currently selected node.
+ * @param {Object} props.currentNode - The currently selected node.
+ *
+ * @returns {JSX.Element} The rendered TreeNode component.
+ */
 const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, currentNode }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const hasChildren = node.children && node.children.length > 0;
-    // console.log('parentChain', parentChain)
+
     const toggleExpand = (e) => {
         // Prevents the click from affecting parent elements
         e.stopPropagation();
@@ -20,25 +33,25 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
     };
 
     const selectionType = () => {
-        let output = ''
+        let output = '';
 
         if (node?.id === currentNode?.id) {
-            output = 'selected'
+            output = 'selected';
         }
 
         if (parentChain.includes(node?.id)) {
-            output = 'parent-selected'
+            output = 'parent-selected';
         }
 
-        // Search list of errors for matching id.
-        const regex = new RegExp(`.*-${currentNode?.id}$`, 'g')
+        // Search list of errors for matching id
+        const regex = new RegExp(`.*-${currentNode?.id}$`, 'g');
 
         if (errors.findIndex(error => error.match(regex)) > -1) {
-            output += " error"
+            output += ' error';
         }
 
-        return output
-    }
+        return output;
+    };
 
     return (
         <li>
@@ -47,8 +60,8 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
                     {
                         hasChildren ? (
                             isExpanded ?
-                            <CaretDown style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }}/> :
-                            <CaretRight style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }}/>
+                            <CaretDown style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }} /> :
+                            <CaretRight style={{ width: 8, fill: 'rgba(255, 255, 255, .78)' }} />
                         ) : ''
                     }
                 </button>
@@ -57,9 +70,17 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
                 </button>
             </div>
             {hasChildren && isExpanded && (
-                <ul className='collapsible'>
+                <ul className='navigation-tree-ul collapsible'>
                     {node.children.map(child => (
-                        <TreeNode errors={errors} parentChain={parentChain} key={child.id} isLocked={isLocked} node={child} setCurrentNode={setCurrentNode} currentNode={currentNode} />
+                        <TreeNode
+                            errors={errors}
+                            parentChain={parentChain}
+                            key={child.id}
+                            isLocked={isLocked}
+                            node={child}
+                            setCurrentNode={setCurrentNode}
+                            currentNode={currentNode}
+                        />
                     ))}
                 </ul>
             )}
@@ -67,26 +88,73 @@ const TreeNode = ({ node, errors, parentChain, isLocked, setCurrentNode, current
     );
 };
 
-
+/**
+ * Tree component renders a tree structure starting from a root node.
+ * It uses the TreeNode component to display each node and its children.
+ *
+ * @param {Object} props - The properties object.
+ * @param {Object} props.data - The root node data for the tree.
+ * @param {Array} props.parentChain - List of parent node IDs in the current selection chain.
+ * @param {Array} props.errors - List of error messages related to nodes.
+ * @param {boolean} props.isLocked - Flag indicating if the nodes are locked.
+ * @param {Function} props.setCurrentNode - Function to set the currently selected node.
+ * @param {Object} props.currentNode - The currently selected node.
+ *
+ * @returns {JSX.Element} The rendered Tree component.
+ */
 const Tree = ({ data, parentChain, errors, isLocked, setCurrentNode, currentNode }) => {
     return (
-        <ul>
-            <TreeNode errors={errors} parentChain={parentChain} isLocked={isLocked} setCurrentNode={setCurrentNode} node={data} currentNode={currentNode} />
+        <ul className='navigation-tree-ul'>
+            <TreeNode
+                errors={errors}
+                parentChain={parentChain}
+                isLocked={isLocked}
+                setCurrentNode={setCurrentNode}
+                node={data}
+                currentNode={currentNode}
+            />
         </ul>
     );
 };
 
-const MetadataTreeDisplay = ({ rootId=0, isLocked, errors, reconstructNestedJSON, setCurrentNode, currentNode, parentChain }) => {
+/**
+ * MetadataTreeDisplay component manages the display of the metadata tree.
+ * It reconstructs the tree data from a root ID and renders the Tree component.
+ *
+ * @param {Object} props - The properties object.
+ * @param {number} [props.rootId=0] - The root ID for reconstructing the tree data.
+ * @param {boolean} props.isLocked - Flag indicating if the nodes are locked.
+ * @param {Array} props.errors - List of error messages related to nodes.
+ * @param {Function} props.reconstructNestedJSON - Function to reconstruct the tree data from the root ID.
+ * @param {Function} props.setCurrentNode - Function to set the currently selected node.
+ * @param {Object} props.currentNode - The currently selected node.
+ * @param {Array} props.parentChain - List of parent node IDs in the current selection chain.
+ *
+ * @returns {JSX.Element} The rendered MetadataTreeDisplay component with the tree structure.
+ */
+const MetadataTreeDisplay = ({ rootId = 0, isLocked, errors, reconstructNestedJSON, setCurrentNode, currentNode, parentChain }) => {
     const nestedData = reconstructNestedJSON(rootId);
 
     return (
         <div className='navigation-tree'>
-            {nestedData ? <Tree errors={errors} parentChain={parentChain} isLocked={isLocked} setCurrentNode={setCurrentNode} data={nestedData} currentNode={currentNode}/> : <p>Loading tree...</p>}
+            {nestedData ? (
+                <Tree
+                    errors={errors}
+                    parentChain={parentChain}
+                    isLocked={isLocked}
+                    setCurrentNode={setCurrentNode}
+                    data={nestedData}
+                    currentNode={currentNode}
+                />
+            ) : (
+                <p>Loading tree...</p>
+            )}
         </div>
     );
 };
 
-
 export {
-    MetadataTreeDisplay, Tree, TreeNode
-}
+    MetadataTreeDisplay,
+    Tree,
+    TreeNode
+};
